@@ -5,6 +5,8 @@ import express from 'express';
 // Extra security packages
 import helmet from 'helmet';
 import cors from 'cors';
+import xss from 'xss-clean';
+import { rateLimit } from 'express-rate-limit';
 
 // TODO: import DB
 
@@ -14,6 +16,18 @@ import cors from 'cors';
 
 // TODO: import middleware
 
+const limiter = rateLimit({
+  // 15 minutes
+  windowMs: 15 * 60 * 1000,
+  // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  limit: 100,
+  // draft-6: `RateLimit-*` headers;
+  // draft-7: combined `RateLimit` header
+  standardHeaders: 'draft-7',
+  // Disable the `X-RateLimit-*` headers.
+  legacyHeaders: false,
+});
+
 // create app
 dotenv.config();
 const app = express();
@@ -22,8 +36,10 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(xss());
+app.use(limiter);
 
-// TODO: using routes
+// using routes
 
 // start the server
 const serverStart = () => {
