@@ -1,4 +1,4 @@
-import 'express-async-errors';
+// import 'express-async-errors';
 import dotenv from 'dotenv';
 import express from 'express';
 
@@ -12,7 +12,8 @@ import { rateLimit } from 'express-rate-limit';
 
 // TODO: import error handler
 
-// TODO: import routes
+// import routes
+import authRouter from './routes/auth.js';
 
 // TODO: import middleware
 
@@ -33,21 +34,29 @@ dotenv.config();
 const app = express();
 
 // using middlewares
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
-app.use(limiter);
+// app.use(limiter);
 
 // using routes
+app.use('/api/v1/auth', authRouter);
+
+// global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 // start the server
 const serverStart = () => {
-  const port = process.env.PORT || 5173;
+  const port = process.env.PORT || 3000;
   const host = process.env.HOST || 'localhost';
 
-  app.listen(port, host, () => {
-    console.info(`Server is running on http://${host}:${port}`);
+  app.listen(port, () => {
+    console.log(`Server is running on http://${host}:${port}`);
   });
 };
 
