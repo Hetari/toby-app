@@ -5,14 +5,6 @@
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Sign in to your account
       </h2>
-      <p class="mt-2 text-center text-sm text-gray-600 max-w">
-        Or
-        <a
-          href="#"
-          class="font-medium text-blue-600 hover:text-blue-500">
-          create an account
-        </a>
-      </p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -27,7 +19,8 @@
               id="login-email"
               name="login-email"
               type="email"
-              placeholder="Enter your email address" />
+              placeholder="Enter your email address"
+              @input="emitEmail" />
           </div>
 
           <div>
@@ -36,34 +29,9 @@
               id="login-password"
               name="login-password"
               type="password"
-              placeholder="Enter your password" />
+              placeholder="Enter your password"
+              @input="emitPassword" />
           </div>
-
-          <!-- TODO:
-          <div class="flex items-center justify-between">
-              <div class="flex items-center">
-              <input
-                id="remember_me"
-                name="remember_me"
-                type="checkbox"
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-              <label
-                for="remember_me"
-                class="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div> -->
-
-          <!-- <div class="text-sm">
-              <a
-                href="#"
-                class="font-medium text-blue-600 hover:text-blue-500">
-                Forgot your password?
-              </a>
-            </div> 
-          </div>
-        -->
-
           <div>
             <button
               type="submit"
@@ -118,4 +86,17 @@
 <script setup lang="ts">
   import InputComponent from '@/components/InputComponent.vue';
   import LoginIcon from '@/components/LoginIcon.vue';
+
+  const form = {
+    email: '',
+    password: '',
+  };
+
+  const emitEmail = (data: string) => {
+    form.email = data;
+  };
+
+  const emitPassword = (data: string) => {
+    form.password = data;
+  };
 </script>
