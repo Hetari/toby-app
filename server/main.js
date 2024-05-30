@@ -8,6 +8,9 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
+// import 0Auth
+import passportSetup from './configs/passport.config.js';
+
 // TODO: import DB
 
 // TODO: import error handler
@@ -16,6 +19,10 @@ import { rateLimit } from 'express-rate-limit';
 import authRouter from './routes/auth.js';
 
 // TODO: import middleware
+
+// create app
+const app = express();
+dotenv.config();
 
 const limiter = rateLimit({
   // 15 minutes
@@ -28,10 +35,6 @@ const limiter = rateLimit({
   // Disable the `X-RateLimit-*` headers.
   legacyHeaders: false,
 });
-
-// create app
-dotenv.config();
-const app = express();
 
 // using middlewares
 app.set('trust proxy', 1);
