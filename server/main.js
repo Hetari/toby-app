@@ -1,4 +1,4 @@
-// import 'express-async-errors';
+import 'express-async-errors';
 import dotenv from 'dotenv';
 import express from 'express';
 
