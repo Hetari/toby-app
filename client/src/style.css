@@ -4,6 +4,25 @@
 
 @layer components {
     .input {
-        @apply appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
+        @apply bg-gray-100 dark:bg-gray-800 appearance-none rounded-md relative block w-full px-3 py-2 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm theme
     }
+
+    .common-padding {
+        @apply p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12;
+    }
+
+    .sidebar {
+        @apply min-h-screen flex flex-col fixed top-0 left-0 w-64
+    }
+
+    .theme {
+        @apply bg-white dark:bg-[#2a2a2a] text-[#2a2a2a] dark:text-white
+    }
+}
+
+@layer base {
+    body {
+        @apply theme;
+    }
+
 }

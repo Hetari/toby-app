@@ -1,14 +1,15 @@
 <template>
   <section
-    class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      <h2 class="mt-6 text-center text-3xl font-extrabold">
         Sign in to your account
       </h2>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div
+        class="bg-zinc-50 dark:bg-black py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form
           class="space-y-6"
           action="#"
@@ -35,7 +36,7 @@
           <div>
             <button
               type="submit"
-              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-inherit bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Sign in
             </button>
           </div>
@@ -44,20 +45,22 @@
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
+              <div
+                class="w-full border-t border-gray-300 dark:border-gray-700"></div>
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-gray-100 text-gray-500">
+              <span
+                class="px-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500">
                 Or continue with
               </span>
             </div>
           </div>
-          <div class="mt-6 grid grid-cols-6 gap-4">
+          <div class="mt-6 grid grid-cols-1 gap-4">
             <LoginIcon
               url="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
               alt="Goggle" />
 
-            <LoginIcon
+            <!-- <LoginIcon
               url="https://ucarecdn.com/95eebb9c-85cf-4d12-942f-3c40d7044dc6/"
               alt="Linkedin" />
 
@@ -75,7 +78,7 @@
 
             <LoginIcon
               url="https://ucarecdn.com/3277d952-8e21-4aad-a2b7-d484dad531fb/"
-              alt="apple" />
+              alt="apple" /> -->
           </div>
         </div>
       </div>

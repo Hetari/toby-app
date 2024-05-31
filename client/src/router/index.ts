@@ -15,8 +15,6 @@ const routes = [
   },
 ];
 
-// router.addRoute({ path: '/about', component: About });
-
 const router = createRouter({
   history: createWebHistory('./'),
   routes: routes,

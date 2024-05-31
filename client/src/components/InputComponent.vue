@@ -1,7 +1,7 @@
 <template>
   <label
     for="email"
-    class="block text-sm font-medium text-gray-700">
+    class="block text-sm font-medium">
     {{ label }}
   </label>
   <div class="mt-1">

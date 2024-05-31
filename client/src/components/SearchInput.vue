@@ -1,0 +1,32 @@
+<template>
+  <div class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
+    <div class="md:flex">
+      <div class="w-full p-3">
+        <div class="relative cursor-pointer">
+          <svg
+            class="absolute hover:animate-pulse top-[50%] left-4 translate-y-[-50%] w-6 fill-none text-[#2c2c2c] dark:text-[#f2f2f2]"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20"
+            height="20">
+            <path
+              d="M19.4 19.4L22 22M20.7 14.85C20.7 11.6191 18.0809 9 14.85 9C11.6191 9 9 11.6191 9 14.85C9 18.0809 11.6191 20.7 14.85 20.7C18.0809 20.7 20.7 18.0809 20.7 14.85Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M2 6C2.1305 4.6645 2.4262 3.7663 3.09625 3.09625C3.7663 2.4262 4.6645 2.1305 6 2M6 22C4.6645 21.8695 3.7663 21.5738 3.09625 20.9037C2.4262 20.2337 2.1305 19.3355 2 18M22 6C21.8695 4.6645 21.5738 3.7663 20.9037 3.09625C20.2337 2.4262 19.3355 2.1305 18 2M2 10L2 14M14 2L10 2"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round" />
+          </svg>
+          <input
+            type="text"
+            class="bg-gray-200 dark:bg-[#2c2c2c] h-14 w-full px-12 rounded-lg focus:outline-none hover:cursor-pointer"
+            name="search" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
