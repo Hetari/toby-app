@@ -6,6 +6,7 @@ import {
   googleAuthRedirect,
   logout,
 } from '../controllers/auth.js';
+import passport from 'passport';
 
 const authRouter = Router();
 
@@ -15,7 +16,11 @@ authRouter.post('/register', register);
 authRouter.post('/login', login);
 
 authRouter.get('/google', googleAuth);
-authRouter.get('/google/redirect', googleAuthRedirect);
+authRouter.get(
+  '/google/redirect',
+  passport.authenticate('google'),
+  googleAuthRedirect
+);
 
 authRouter.get('/logout', logout);
 

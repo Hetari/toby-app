@@ -14,9 +14,7 @@ const googleAuth = passport.authenticate('google', {
 });
 
 const googleAuthRedirect = async (req, res) => {
-  // TODO: add google auth logic here
-  console.log('Google auth controller');
-  return res.send('Google auth controller');
+  return res.send('Google auth redirect');
 };
 
 const logout = async (req, res) => {

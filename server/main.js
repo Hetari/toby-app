@@ -1,6 +1,7 @@
 import 'express-async-errors';
 import dotenv from 'dotenv';
 import express from 'express';
+import session from 'express-session';
 
 // Extra security packages
 import helmet from 'helmet';
@@ -8,10 +9,10 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
-// import 0Auth
+// import DB and 0Auth
 import passportSetup from './configs/passport.config.js';
-
-// TODO: import DB
+import sequelize from './models/index.js';
+// import UserModel from './models/users.js';
 
 // TODO: import error handler
 
@@ -42,6 +43,14 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 // app.use(limiter);
 
 // using routes
@@ -54,13 +63,21 @@ app.use((err, req, res, next) => {
 });
 
 // start the server
-const serverStart = () => {
-  const port = process.env.PORT || 3000;
-  const host = process.env.HOST || 'localhost';
+const serverStart = async () => {
+  try {
+    await sequelize.sync();
+    console.info('Database connected...');
 
-  app.listen(port, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-  });
+    const port = process.env.PORT || 3000;
+    const host = process.env.HOST || 'localhost';
+
+    app.listen(port, () => {
+      console.log(`Server is running on http://${host}:${port}`);
+    });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+    process.exit(1); // Exit process with failure
+  }
 };
 
 serverStart();
