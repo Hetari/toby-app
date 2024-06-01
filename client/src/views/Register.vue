@@ -3,14 +3,14 @@
     class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold">
-        Sign in to your account
+        Create new account
       </h2>
       <p class="text-center">
-        didn't have an account?
+        do you have an account?
         <RouterLink
           class="text-blue-600 dark:text-blue-400"
-          to="/register"
-          >Create account</RouterLink
+          to="/login"
+          >Login here</RouterLink
         >
       </p>
     </div>
@@ -23,6 +23,16 @@
           class="space-y-6"
           action="#"
           method="POST">
+          <div>
+            <InputComponent
+              label="username"
+              id="login-username"
+              name="login-username"
+              type="text"
+              placeholder="Enter your username"
+              @input="emitUsername" />
+          </div>
+
           <div>
             <InputComponent
               label="Email address"
@@ -45,8 +55,8 @@
           <div>
             <button
               type="submit"
-              class="text-white group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Sign in
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-inherit bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              register
             </button>
           </div>
         </form>
@@ -60,7 +70,7 @@
             <div class="relative flex justify-center text-sm">
               <span
                 class="px-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500">
-                Or continue with
+                Or register with
               </span>
             </div>
           </div>
@@ -69,26 +79,6 @@
               @click="googleAuthHandler"
               url="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
               alt="Goggle" />
-
-            <!-- <LoginIcon
-              url="https://ucarecdn.com/95eebb9c-85cf-4d12-942f-3c40d7044dc6/"
-              alt="Linkedin" />
-
-            <LoginIcon
-              url="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
-              alt="Github" />
-
-            <LoginIcon
-              url="https://ucarecdn.com/6f56c0f1-c9c0-4d72-b44d-51a79ff38ea9/"
-              alt="Facebook" />
-
-            <LoginIcon
-              url="https://ucarecdn.com/82d7ca0a-c380-44c4-ba24-658723e2ab07/"
-              alt="twitter" />
-
-            <LoginIcon
-              url="https://ucarecdn.com/3277d952-8e21-4aad-a2b7-d484dad531fb/"
-              alt="apple" /> -->
           </div>
         </div>
       </div>
@@ -107,14 +97,21 @@
   const form = reactive({
     email: '',
     password: '',
+    username: '',
   });
 
   const emitEmail = (data: string) => {
+    console.log(form.email);
+
     form.email = data;
   };
 
   const emitPassword = (data: string) => {
     form.password = data;
+  };
+
+  const emitUsername = (data: string) => {
+    form.username = data;
   };
 
   const googleAuthHandler = (e: Event) => {
