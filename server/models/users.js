@@ -16,6 +16,7 @@ User.init(
 
     email: {
       // Allow null for OAuth users
+      unique: true,
       type: DataTypes.STRING,
       allowNull: true,
       validate: {

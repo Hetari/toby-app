@@ -119,11 +119,16 @@
   const login = (e: Event) => {
     if (form.email && form.password) {
       axios
-        .post(store.backend.url + store.backend.api + '/auth/login/', form)
+        .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
           if (response.data.done) {
-            router.push('/');
+            console.log(response.data);
+
+            // router.push('/');
           }
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
   };

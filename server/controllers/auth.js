@@ -1,36 +1,59 @@
 import passport from 'passport';
 import bcrypt from 'bcrypt';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import { User } from '../models/users.js';
+import generateToken from '../functions/index.js';
 
 const register = async (req, res) => {
-  // TODO: add normal register logic here
-  return res.send('Register controller');
-};
-const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    // TODO: custom error
-    throw new Error('All fields are required');
+    return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
   }
 
   // if (password.length < 8) {
-  //   throw new Error('Password must be at least 8 characters long');
+  //   throw new BadRequestError('Password must be at least 8 characters long');
   // }
 
   // Generate a salt for hashing passwords with cost factor 10, it is basically random bytes
   const salt = await bcrypt.genSalt(10);
   const encryptedPassword = await bcrypt.hash(password, salt);
 
-  User.create({
-    email,
-    password: encryptedPassword,
-  });
+  try {
+    const user = await User.create({
+      email,
+      password: encryptedPassword,
+    });
+
+    const token = generateToken(user.id, email);
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      // use true in production with HTTPS
+      secure: true,
+      // 'Strict' for best security
+      sameSite: 'Strict',
+      // 1 hour
+      maxAge: 3600000,
+    });
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
+    } else {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(ReasonPhrases.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   return res.status(StatusCodes.CREATED).json({
     done: true,
   });
+};
+
+const login = async (req, res) => {
+  // TODO: add normal register logic here
+  return res.send('Login controller');
 };
 
 const googleAuth = passport.authenticate('google', {
