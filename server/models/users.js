@@ -8,12 +8,6 @@ class User extends Model {}
 //   'User',
 User.init(
   {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   primaryKey: true,
-    //   autoIncrement: true,
-    // },
-
     email: {
       // Allow null for OAuth users
       unique: true,

@@ -101,8 +101,6 @@
   });
 
   const emitEmail = (data: string) => {
-    console.log(form.email);
-
     form.email = data;
   };
 
@@ -127,7 +125,7 @@
 
     if (form.email && form.password) {
       axios
-        .post(store.backend.url + store.backend.api + '/auth/login/', form)
+        .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
           if (response.data.done) {
             console.log(response.data);
