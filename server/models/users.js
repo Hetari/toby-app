@@ -3,9 +3,6 @@ import sequelize from './index.js';
 
 class User extends Model {}
 
-// Define the User model
-// const User = sequelize.define(
-//   'User',
 User.init(
   {
     email: {
@@ -43,14 +40,7 @@ User.init(
     sequelize: sequelize,
     modelName: 'User',
     timestamps: true,
-    // hooks: {
-    //   beforeUpdate: (user) => {
-    //     user.updatedAt = new Date();
-    //   },
-    // },
   }
 );
 
-// );
-
-export { User };
+export default User;

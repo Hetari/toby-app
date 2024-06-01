@@ -133,7 +133,6 @@
         .post(store.backend.url + store.backend.api + '/auth/login/', form)
         .then((response) => {
           if (response.data.done) {
-            console.log(response.data);
             //  TODO: receive the token from the backend
             router.push('/');
           }

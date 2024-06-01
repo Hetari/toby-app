@@ -1,7 +1,7 @@
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { User } from '../models/users.js';
+import User from '../models/users.js';
 import generateToken from '../functions/index.js';
 
 const register = async (req, res) => {
@@ -25,9 +25,8 @@ const register = async (req, res) => {
       password: encryptedPassword,
     });
 
-    const token = generateToken(user.id, email);
-
     //  TODO: send the token into the frontend
+    const token = generateToken(user.id, email);
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
