@@ -129,12 +129,19 @@
     e.preventDefault();
 
     if (form.email && form.password) {
+      axios.defaults.withCredentials = true;
+      axios.defaults.baseURL = store.backend.url + store.backend.api;
+
       axios
-        .post(store.backend.url + store.backend.api + '/auth/login/', form)
+        .post(store.backend.url + store.backend.api + '/auth/login/', form, {
+          withCredentials: true,
+        })
         .then((response) => {
           if (response.data.done) {
+            console.log(response);
+
             //  TODO: receive the token from the backend
-            router.push('/');
+            // router.push('/');
           }
         })
         .catch((error) => {

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import User from '../models/users.js';
 import generateToken from '../functions/index.js';
+import cookie from 'cookie';
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -49,6 +50,8 @@ const login = async (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
   }
 
+  let token = null;
+
   try {
     const user = await User.findOne({
       where: { email },
@@ -67,8 +70,7 @@ const login = async (req, res) => {
         .send(ReasonPhrases.UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
-    //  TODO: send the token into the frontend
-    const token = generateToken(user.id, email);
+    token = generateToken(user.id, email);
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
@@ -79,9 +81,19 @@ const login = async (req, res) => {
     }
   }
 
-  return res.status(StatusCodes.CREATED).json({
-    done: true,
-  });
+  // send the token into the frontend
+  return res
+    .status(StatusCodes.CREATED)
+    .setHeader(
+      'Set-Cookie',
+      cookie.serialize('token', token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      })
+    )
+    .json({
+      done: true,
+    });
 };
 
 const googleAuth = passport.authenticate('google', {
