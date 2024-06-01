@@ -14,15 +14,8 @@ User.init(
     //   autoIncrement: true,
     // },
 
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      // unique: true,
-    },
-
     email: {
       // Allow null for OAuth users
-
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
@@ -49,28 +42,6 @@ User.init(
       // Ensure unique IDs for OAuth users
       unique: true,
     },
-
-    // accessToken: {
-    //   type: DataTypes.STRING,
-    //   allowNull: true,
-    // },
-
-    // refreshToken: {
-    //   type: DataTypes.STRING,
-    //   allowNull: true,
-    // },
-
-    // createdAt: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false,
-    //   defaultValue: DataTypes.NOW,
-    // },
-
-    // updatedAt: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false,
-    //   defaultValue: DataTypes.NOW,
-    // },
   },
   {
     // Automatically adds createdAt and updatedAt fields

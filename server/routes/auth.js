@@ -1,11 +1,5 @@
 import { Router } from 'express';
-import {
-  register,
-  login,
-  googleAuth,
-  googleAuthRedirect,
-  logout,
-} from '../controllers/auth.js';
+import { register, login, googleAuth, logout } from '../controllers/auth.js';
 import passport from 'passport';
 
 const authRouter = Router();
@@ -18,8 +12,9 @@ authRouter.post('/login', login);
 authRouter.get('/google', googleAuth);
 authRouter.get(
   '/google/redirect',
-  passport.authenticate('google'),
-  googleAuthRedirect
+  passport.authenticate('google', {
+    successRedirect: process.env.FRONTEND_URL,
+  })
 );
 
 authRouter.get('/logout', logout);

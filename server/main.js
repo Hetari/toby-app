@@ -51,7 +51,7 @@ app.use(
     cookie: { secure: true },
   })
 );
-// app.use(limiter);
+app.use(limiter);
 
 // using routes
 app.use('/api/v1/auth', authRouter);

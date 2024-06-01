@@ -11,6 +11,7 @@
       <div
         class="bg-zinc-50 dark:bg-black py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form
+          @submit.prevent="login"
           class="space-y-6"
           action="#"
           method="POST">
@@ -57,6 +58,7 @@
           </div>
           <div class="mt-6 grid grid-cols-1 gap-4">
             <LoginIcon
+              @click="googleAuthHandler"
               url="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
               alt="Goggle" />
 
@@ -89,6 +91,9 @@
 <script setup lang="ts">
   import InputComponent from '@/components/InputComponent.vue';
   import LoginIcon from '@/components/LoginIcon.vue';
+  import store from '@/store';
+  import axios from 'axios';
+  import router from '../router/index.ts';
 
   const form = {
     email: '',
@@ -101,5 +106,25 @@
 
   const emitPassword = (data: string) => {
     form.password = data;
+  };
+
+  const googleAuthHandler = (e: Event) => {
+    e.preventDefault();
+
+    const requestUrl = store.backend.url + store.backend.api + '/auth/google/';
+
+    window.open(requestUrl, '_self');
+  };
+
+  const login = (e: Event) => {
+    if (form.email && form.password) {
+      axios
+        .post(store.backend.url + store.backend.api + '/auth/login/', form)
+        .then((response) => {
+          if (response.data.done) {
+            router.push('/');
+          }
+        });
+    }
   };
 </script>
