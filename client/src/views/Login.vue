@@ -117,19 +117,23 @@
   };
 
   const login = (e: Event) => {
+    e.preventDefault();
+
     if (form.email && form.password) {
       axios
         .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
           if (response.data.done) {
             console.log(response.data);
-
-            // router.push('/');
+            //  TODO: receive the token from the backend
+            router.push('/');
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error('Login error: ', error);
         });
+    } else {
+      alert('Email and password are required');
     }
   };
 </script>

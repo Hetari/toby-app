@@ -27,15 +27,7 @@ const register = async (req, res) => {
 
     const token = generateToken(user.id, email);
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      // use true in production with HTTPS
-      secure: true,
-      // 'Strict' for best security
-      sameSite: 'Strict',
-      // 1 hour
-      maxAge: 3600000,
-    });
+    //  TODO: send the token into the frontend
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
