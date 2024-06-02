@@ -19,7 +19,6 @@ import sequelize from './models/index.js';
 import authRouter from './routes/authRoute.js';
 import tabRouter from './routes/tabRoute.js';
 
-// TODO: import middleware
 import authMiddleware from './middleware/authMiddleware.js';
 
 // create app

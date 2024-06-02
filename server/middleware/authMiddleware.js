@@ -16,9 +16,14 @@ const authMiddleware = async (req, res, next) => {
   try {
     const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET);
 
-    // attach the user to job routes
-    // TODO: remove the name prop
     const user = await User.findOne({ where: { id: payload.userId } });
+
+    if (!user) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        success: false,
+        message: ReasonPhrases.UNAUTHORIZED,
+      });
+    }
 
     req.user = user;
     next();
