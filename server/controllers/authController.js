@@ -8,7 +8,10 @@ const register = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: ReasonPhrases.BAD_REQUEST,
+    });
   }
 
   // if (password.length < 8) {
@@ -19,26 +22,32 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const encryptedPassword = await bcrypt.hash(password, salt);
 
+  let token = null;
   try {
     const user = await User.create({
       email,
       password: encryptedPassword,
     });
 
-    //  TODO: send the token into the frontend
-    const token = generateToken(user.id, email);
+    token = generateToken(user.id, email);
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
-      return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
+      return res.status(StatusCodes.CONFLICT).json({
+        success: false,
+        message: ReasonPhrases.CONFLICT,
+      });
     } else {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .send(ReasonPhrases.INTERNAL_SERVER_ERROR);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+      });
     }
   }
 
   return res.status(StatusCodes.CREATED).json({
-    done: true,
+    success: true,
+    message: ReasonPhrases.ACCEPTED,
+    token,
   });
 };
 
@@ -46,7 +55,10 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: ReasonPhrases.BAD_REQUEST,
+    });
   }
 
   let token = null;
@@ -72,11 +84,15 @@ const login = async (req, res) => {
     token = generateToken(user.id, email);
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
-      return res.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
+      return res.status(StatusCodes.CONFLICT).json({
+        success: false,
+        message: ReasonPhrases.CONFLICT,
+      });
     } else {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .send(ReasonPhrases.INTERNAL_SERVER_ERROR);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+      });
     }
   }
 
