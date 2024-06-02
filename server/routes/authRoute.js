@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { register, login, googleAuth, logout } from '../controllers/auth.js';
+import {
+  register,
+  login,
+  googleAuth,
+  logout,
+} from '../controllers/authController.js';
 import passport from 'passport';
 
 const authRouter = Router();

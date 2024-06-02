@@ -10,13 +10,14 @@ import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
 // import DB
-import User from './models/users.js';
-import Site from './models/sites.js';
-import Collection from './models/collections.js';
+// import User from './models/users.js';
+// import Site from './models/sites.js';
+// import Collection from './models/collections.js';
 import sequelize from './models/index.js';
 
 // import routes
 import authRouter from './routes/authRoute.js';
+import tabRouter from './routes/tabRoute.js';
 
 // TODO: import middleware
 import authMiddleware from './middleware/authMiddleware.js';
@@ -60,6 +61,12 @@ app.use(
 
 // using routes
 app.use('/api/v1/auth', authRouter);
+// TODO: add auth middleware later
+app.use('/api/v1/tab', tabRouter);
+
+// app.get('/api/v1', authMiddleware, (req, res) => {
+//   res.send('ok');
+// });
 
 // global error handler
 app.use((err, req, res, next) => {
@@ -71,7 +78,6 @@ app.use((err, req, res, next) => {
 const serverStart = async () => {
   try {
     await sequelize.sync({
-      force: true,
       alter: true,
       // logging: false,
     });
