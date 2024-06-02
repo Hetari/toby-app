@@ -132,21 +132,22 @@
   const login = (e: Event) => {
     e.preventDefault();
 
-    if (form.email && form.password) {
+    if (form.username && form.email && form.password) {
       axios
         .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
           if (response.data.done) {
             console.log(response.data);
-            //  TODO: receive the token from the backend
+            const token = response.data.token;
+            localStorage.setItem('token', token);
             router.push('/');
           }
         })
         .catch((error) => {
-          console.error('Login error: ', error);
+          alert(`Login error: ${error}`);
         });
     } else {
-      alert('Email and password are required');
+      alert('Email, username and password are required');
     }
   };
 </script>

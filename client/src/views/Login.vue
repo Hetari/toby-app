@@ -138,24 +138,27 @@
     e.preventDefault();
 
     if (form.email && form.password) {
-      axios.defaults.withCredentials = true;
-      axios.defaults.baseURL = store.backend.url + store.backend.api;
+      // TODO: delete all comments later
+      // axios.defaults.withCredentials = true;
+      // axios.defaults.baseURL = store.backend.url + store.backend.api;
 
       axios
-        .post(store.backend.url + store.backend.api + '/auth/login/', form, {
-          withCredentials: true,
-        })
+        .post(
+          store.backend.url + store.backend.api + '/auth/login/',
+          form
+          // , {
+          //   withCredentials: true,
+          // }
+        )
         .then((response) => {
           if (response.data && response.data.success) {
             const token = response.data.token;
-
             localStorage.setItem('token', token);
-
             router.push('/');
           }
         })
         .catch((error) => {
-          console.error('Login error: ', error);
+          alert(`Login error: ${error}`);
         });
     } else {
       alert('Email and password are required');
