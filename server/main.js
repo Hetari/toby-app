@@ -9,17 +9,14 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
-// import DB and 0Auth
-import passportSetup from './configs/passport.config.js';
+// import DB
 import sequelize from './models/index.js';
-// import UserModel from './models/users.js';
-
-// TODO: import error handler
 
 // import routes
 import authRouter from './routes/auth.js';
 
 // TODO: import middleware
+import authMiddleware from './middleware/authMiddleware.js';
 
 // create app
 const app = express();
@@ -60,6 +57,9 @@ app.use(limiter);
 
 // using routes
 app.use('/api/v1/auth', authRouter);
+app.use('/', authMiddleware, (req, res) => {
+  return res.status(200).send('Ok');
+});
 
 // global error handler
 app.use((err, req, res, next) => {

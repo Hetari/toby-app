@@ -104,6 +104,15 @@
   import router from '../router/index.ts';
   import { reactive } from 'vue';
 
+  import { onMounted } from 'vue';
+
+  onMounted(() => {
+    const jwtToken = localStorage.getItem('token');
+    if (jwtToken) {
+      router.push('/');
+    }
+  });
+
   const form = reactive({
     email: '',
     password: '',
@@ -137,11 +146,12 @@
           withCredentials: true,
         })
         .then((response) => {
-          if (response.data.done) {
-            console.log(response);
+          if (response.data && response.data.success) {
+            const token = response.data.token;
 
-            //  TODO: receive the token from the backend
-            // router.push('/');
+            localStorage.setItem('token', token);
+
+            router.push('/');
           }
         })
         .catch((error) => {

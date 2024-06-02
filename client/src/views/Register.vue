@@ -94,6 +94,15 @@
   import router from '../router/index.ts';
   import { reactive } from 'vue';
 
+  import { onMounted } from 'vue';
+
+  onMounted(() => {
+    const jwtToken = localStorage.getItem('token');
+    if (jwtToken) {
+      router.push('/');
+    }
+  });
+
   const form = reactive({
     email: '',
     password: '',

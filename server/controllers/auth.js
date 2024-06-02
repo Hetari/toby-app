@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import User from '../models/users.js';
 import generateToken from '../functions/index.js';
-import cookie from 'cookie';
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -82,18 +81,11 @@ const login = async (req, res) => {
   }
 
   // send the token into the frontend
-  return res
-    .status(StatusCodes.CREATED)
-    .setHeader(
-      'Set-Cookie',
-      cookie.serialize('token', token, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-      })
-    )
-    .json({
-      done: true,
-    });
+  return res.status(StatusCodes.CREATED).json({
+    success: true,
+    message: ReasonPhrases.ACCEPTED,
+    token,
+  });
 };
 
 const googleAuth = passport.authenticate('google', {
