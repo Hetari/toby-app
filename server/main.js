@@ -10,10 +10,13 @@ import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
 // import DB
+import User from './models/users.js';
+import Site from './models/sites.js';
+import Collection from './models/collections.js';
 import sequelize from './models/index.js';
 
 // import routes
-import authRouter from './routes/auth.js';
+import authRouter from './routes/authRoute.js';
 
 // TODO: import middleware
 import authMiddleware from './middleware/authMiddleware.js';
@@ -53,7 +56,7 @@ app.use(
     cookie: { secure: true },
   })
 );
-app.use(limiter);
+// app.use(limiter);
 
 // using routes
 app.use('/api/v1/auth', authRouter);
@@ -67,7 +70,11 @@ app.use((err, req, res, next) => {
 // start the server
 const serverStart = async () => {
   try {
-    await sequelize.sync();
+    await sequelize.sync({
+      force: true,
+      alter: true,
+      // logging: false,
+    });
     console.info('Database connected...');
 
     const port = process.env.PORT || 3000;

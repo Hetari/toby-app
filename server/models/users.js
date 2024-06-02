@@ -1,10 +1,14 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from './index.js';
 
-class User extends Model {}
-
-User.init(
+const User = sequelize.define(
+  'user',
   {
+    username: {
+      type: 'string',
+      allowNull: true,
+    },
+
     email: {
       // Allow null for OAuth users
       unique: true,
@@ -36,8 +40,6 @@ User.init(
     },
   },
   {
-    // Automatically adds createdAt and updatedAt fields
-    sequelize: sequelize,
     modelName: 'User',
     timestamps: true,
   }

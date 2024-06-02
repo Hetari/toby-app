@@ -59,14 +59,14 @@ const login = async (req, res) => {
     if (!user) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .send(ReasonPhrases.UNAVAILABLE_FOR_LEGAL_REASONS);
+        .send(ReasonPhrases.UNAUTHORIZED);
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .send(ReasonPhrases.UNAVAILABLE_FOR_LEGAL_REASONS);
+        .send(ReasonPhrases.UNAUTHORIZED);
     }
 
     token = generateToken(user.id, email);
