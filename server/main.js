@@ -20,6 +20,7 @@ import authRouter from './routes/authRoute.js';
 import tabRouter from './routes/tabRoute.js';
 
 import authMiddleware from './middleware/authMiddleware.js';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 // create app
 const app = express();
@@ -66,6 +67,13 @@ app.use('/api/v1/tab', tabRouter);
 // app.get('/api/v1', authMiddleware, (req, res) => {
 //   res.send('ok');
 // });
+
+app.post('/api/v1/is-logged-in', authMiddleware, (req, res) => {
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    message: ReasonPhrases.OK,
+  });
+});
 
 // global error handler
 app.use((err, req, res, next) => {
