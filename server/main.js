@@ -57,9 +57,6 @@ app.use(limiter);
 
 // using routes
 app.use('/api/v1/auth', authRouter);
-app.use('/', authMiddleware, (req, res) => {
-  return res.status(200).send('Ok');
-});
 
 // global error handler
 app.use((err, req, res, next) => {
