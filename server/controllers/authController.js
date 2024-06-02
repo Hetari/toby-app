@@ -61,8 +61,6 @@ const login = async (req, res) => {
     });
   }
 
-  let token = null;
-
   try {
     const user = await User.findOne({
       where: { email },
@@ -81,7 +79,13 @@ const login = async (req, res) => {
         .send(ReasonPhrases.UNAUTHORIZED);
     }
 
-    token = generateToken(user.id, email);
+    const token = generateToken(user.id, email);
+    // send the token into the frontend
+    return res.status(StatusCodes.ACCEPTED).json({
+      success: true,
+      message: ReasonPhrases.ACCEPTED,
+      token,
+    });
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(StatusCodes.CONFLICT).json({
@@ -95,13 +99,6 @@ const login = async (req, res) => {
       });
     }
   }
-
-  // send the token into the frontend
-  return res.status(StatusCodes.CREATED).json({
-    success: true,
-    message: ReasonPhrases.ACCEPTED,
-    token,
-  });
 };
 
 const googleAuth = passport.authenticate('google', {

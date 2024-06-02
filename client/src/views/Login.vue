@@ -153,12 +153,13 @@
         .then((response) => {
           if (response.data && response.data.success) {
             const token = response.data.token;
+
             localStorage.setItem('token', token);
             router.push('/');
           }
         })
-        .catch((error) => {
-          alert(`Login error: ${error}`);
+        .catch(() => {
+          alert('There is no user with this email and password');
         });
     } else {
       alert('Email and password are required');

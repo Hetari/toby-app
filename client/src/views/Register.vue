@@ -144,7 +144,7 @@
           }
         })
         .catch((error) => {
-          alert(`Login error: ${error}`);
+          console.log(error);
         });
     } else {
       alert('Email, username and password are required');
