@@ -71,7 +71,7 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
-app.use(morgan('tiny', { stream: accessLogStream }));
+app.use(morgan('combined', { stream: accessLogStream }));
 
 app.set('trust proxy', 1);
 app.use(express.json());

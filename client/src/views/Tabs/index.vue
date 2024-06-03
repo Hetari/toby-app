@@ -1,14 +1,22 @@
 <template>
-  <section class="mt-10 space-y-5">
-    <div>
-      <p
-        class="text-center text-red-500 font-bold text-4xl"
-        v-if="items.length == 0">
-        There is no data
-      </p>
-      <table
-        v-else
-        class="text-sm text-left rtl:text-right w-[90%]">
+  <section>
+    <div
+      v-if="items.length == 0"
+      class="relative h-40">
+      <p class="text-center text-red-500 font-bold text-xl">There is no data</p>
+
+      <router-link
+        to="/sites/add-tab"
+        class="text-white bg-black py-2 px-4 rounded absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        Add
+      </router-link>
+    </div>
+    <div v-else>
+      <div class="flex flex-1 justify-between w-[90%] my-5">
+        <h1>Tabs</h1>
+        <button>Add</button>
+      </div>
+      <table class="text-sm text-left rtl:text-right w-[90%]">
         <thead class="text-xs uppercase bg-zinc-50 dark:bg-black">
           <tr>
             <th
@@ -67,6 +75,7 @@
   import { onBeforeMount, ref } from 'vue';
   import axios from 'axios';
   import store from '@/store';
+  import { RouterLink } from 'vue-router';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');

@@ -3,6 +3,7 @@ import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import SiteView from '@/views/Tabs/index.vue';
+import addTab from '@/views/Tabs/addTab.vue';
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
     path: '/sites',
     name: 'Sites',
     component: SiteView,
+  },
+  {
+    path: '/sites/add-tab',
+    name: 'AddTab',
+    component: addTab,
   },
   {
     path: '/login',
