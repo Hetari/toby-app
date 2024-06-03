@@ -1,7 +1,14 @@
 <template>
   <section class="mt-10 space-y-5">
     <div>
-      <table class="text-sm text-left rtl:text-right w-[90%]">
+      <p
+        class="text-center text-red-500 font-bold text-4xl"
+        v-if="items.length == 0">
+        There is no data
+      </p>
+      <table
+        v-else
+        class="text-sm text-left rtl:text-right w-[90%]">
         <thead class="text-xs uppercase bg-zinc-50 dark:bg-black">
           <tr>
             <th
