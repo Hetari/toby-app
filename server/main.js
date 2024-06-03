@@ -1,7 +1,9 @@
 import 'express-async-errors';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
+import passport from './configs/passport.config.js';
 
 // Extra security packages
 import helmet from 'helmet';
@@ -24,7 +26,6 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 // create app
 const app = express();
-dotenv.config();
 
 const limiter = rateLimit({
   // 15 minutes
@@ -51,13 +52,17 @@ app.use(cors(corsConfig));
 app.use(xss());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'your_secret_key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
+    saveUninitialized: false,
+    // cookie: { secure: true },
   })
 );
 // app.use(limiter);
+
+// initialize passport and session
+app.use(passport.initialize());
+app.use(passport.session());
 
 // using routes
 app.use('/api/v1/auth', authRouter);
@@ -86,6 +91,7 @@ const serverStart = async () => {
   try {
     await sequelize.sync({
       alter: true,
+      force: true,
       // logging: false,
     });
     console.info('Database connected...');

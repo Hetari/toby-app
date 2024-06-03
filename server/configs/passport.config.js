@@ -1,6 +1,8 @@
 import passport from 'passport';
-import GoogleStrategy from 'passport-google-oauth20';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import User from '../models/users.js';
+
+import 'dotenv/config';
 
 passport.use(
   new GoogleStrategy(
@@ -8,19 +10,22 @@ passport.use(
       clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
       clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
       callbackURL: '/api/v1/auth/google/redirect',
+      passReqToCallback: true,
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (request, accessToken, refreshToken, profile, done) => {
       try {
         // check if user exists
         let user = await User.findOne({
           where: {
-            provider: profile.provider,
-            providerId: profile.id,
+            email: profile.emails[0].value,
+            //   provider: profile.provider,
+            //   providerId: profile.id,
           },
         });
 
         if (!user) {
           user = await User.create({
+            email: profile.emails[0].value,
             username: profile.displayName,
             provider: profile.provider,
             providerId: profile.id,
@@ -40,13 +45,8 @@ passport.serializeUser((user, done) => {
 });
 
 // Deserialize user from session
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findByPk(id);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
-  }
+passport.deserializeUser(function (user, done) {
+  done(null, user);
 });
 
 export default passport;

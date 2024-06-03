@@ -102,7 +102,7 @@ const login = async (req, res) => {
 };
 
 const googleAuth = passport.authenticate('google', {
-  scope: ['profile'],
+  scope: ['profile', 'email'],
 });
 
 const logout = async (req, res) => {

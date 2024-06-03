@@ -5,15 +5,14 @@ const User = sequelize.define(
   'user',
   {
     username: {
+      // Allow null for OAuth users
       type: 'string',
       allowNull: true,
     },
 
     email: {
-      // Allow null for OAuth users
       unique: true,
       type: DataTypes.STRING,
-      allowNull: true,
       validate: {
         isEmail: true,
       },
