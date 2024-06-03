@@ -11,6 +11,12 @@ import cors from 'cors';
 import xss from 'xss-clean';
 import { rateLimit } from 'express-rate-limit';
 
+// import logs
+import fs from 'fs';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import morgan from 'morgan';
+
 // import DB
 // import User from './models/users.js';
 // import Site from './models/sites.js';
@@ -46,6 +52,27 @@ const corsConfig = {
 };
 
 // using middlewares
+
+// create and defined the absolute path in ES module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Define the log directory path
+const logDirectory = path.join(__dirname, 'log');
+
+// Ensure log directory exists
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory, { recursive: true });
+}
+
+// Create a write stream (in append mode) for access.log in the log directory
+const accessLogStream = fs.createWriteStream(
+  path.join(logDirectory, 'access.log'),
+  { flags: 'a' }
+);
+
+app.use(morgan('tiny', { stream: accessLogStream }));
+
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(helmet());
@@ -59,6 +86,7 @@ app.use(
     // cookie: { secure: true },
   })
 );
+
 // app.use(limiter);
 
 // initialize passport and session
