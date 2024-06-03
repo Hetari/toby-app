@@ -23,6 +23,7 @@ import tabRouter from './routes/tabRoute.js';
 
 import authMiddleware from './middleware/authMiddleware.js';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import collectionRouter from './routes/collectionRouter.js';
 
 // create app
 const app = express();
@@ -66,12 +67,10 @@ app.use(passport.session());
 
 // using routes
 app.use('/api/v1/auth', authRouter);
+
 // TODO: add auth middleware later
 app.use('/api/v1/tab', tabRouter);
-
-// app.get('/api/v1', authMiddleware, (req, res) => {
-//   res.send('ok');
-// });
+app.use('/api/v1/collection', authMiddleware, collectionRouter);
 
 app.post('/api/v1/is-logged-in', authMiddleware, (req, res) => {
   return res.status(StatusCodes.OK).json({
@@ -91,7 +90,7 @@ const serverStart = async () => {
   try {
     await sequelize.sync({
       alter: true,
-      force: true,
+      force: !true,
       // logging: false,
     });
     console.info('Database connected...');

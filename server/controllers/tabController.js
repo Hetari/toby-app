@@ -1,9 +1,9 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import Site from '../models/sites.js';
+import Collection from '../models/collections.js';
 
 const createTab = async (req, res) => {
-  const { title, url } = req.body;
-
+  const { title, url, collection } = req.body;
   if (!title || title.trim().length === 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       success: false,
@@ -15,6 +15,7 @@ const createTab = async (req, res) => {
     // TODO: add description, customTitle, customDescription
     const site = await Site.create({
       title,
+      collectionId: collection,
       url,
     });
 
