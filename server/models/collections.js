@@ -8,6 +8,10 @@ const Collection = sequelize.define(
     title: {
       type: DataTypes.STRING,
     },
+    isStared: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     modelName: 'Collection',
@@ -17,14 +21,14 @@ const Collection = sequelize.define(
 
 Collection.belongsTo(User, {
   foreignKey: 'userId',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
+  // onDelete: 'CASCADE',
+  // onUpdate: 'CASCADE',
 });
 
 User.hasMany(Collection, {
   foreignKey: 'userId',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
+  // onDelete: 'CASCADE',
+  // onUpdate: 'CASCADE',
 });
 
 export default Collection;

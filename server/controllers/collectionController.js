@@ -3,7 +3,7 @@ import Collection from '../models/collections.js';
 
 // TODO: add space logic
 const createCollection = async (req, res) => {
-  const { title } = req.body;
+  const { title, isStared } = req.body;
 
   if (!title || title.trim().length === 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -15,8 +15,11 @@ const createCollection = async (req, res) => {
   try {
     const collection = await Collection.create({
       title,
+      isStared,
       userId: req.user.id,
     });
+
+    console.error(collection.isNewRecord);
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -83,7 +86,7 @@ const deleteCollection = async (req, res) => {
 
 const updateCollectionPatch = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
+  const { title, isStared } = req.body;
 
   try {
     const collection = await Collection.findOne({
@@ -105,6 +108,7 @@ const updateCollectionPatch = async (req, res) => {
     }
 
     collection.title = title;
+    collection.isStared = isStared;
     await collection.save();
 
     return res.status(StatusCodes.OK).json({

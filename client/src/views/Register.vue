@@ -136,9 +136,10 @@
       axios
         .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
-          if (response.data.done) {
+          if (response.data.success) {
             const token = response.data.token;
             localStorage.setItem('token', token);
+
             router.push('/');
           }
         })
