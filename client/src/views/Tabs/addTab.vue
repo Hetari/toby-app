@@ -62,8 +62,8 @@
             <option
               v-for="item in items"
               :key="item.id"
-              :value="item.id">
-              {{ item.title }}
+              :value="item.collectionId">
+              {{ item.Collection.title }}
             </option>
           </select>
         </div>
@@ -93,15 +93,7 @@
     collection: '',
   });
 
-  let items: Ref<
-    {
-      id: number;
-      title: string;
-      created_at: string;
-      updated_at: string;
-      userId: number;
-    }[]
-  > = ref([]);
+  let items: Ref<any[]> = ref([]);
 
   const emitTitle = (data: string) => {
     form.title = data;
