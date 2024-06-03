@@ -6,6 +6,7 @@ import SiteView from '@/views/Tabs/index.vue';
 import addTab from '@/views/Tabs/addTab.vue';
 import CollectionView from '@/views/Collections/index.vue';
 import addCollection from '@/views/Collections/AddCollection.vue';
+import editCollection from '@/views/Collections/EditCollection.vue';
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/collections/add-collection',
     name: 'AddCollection',
     component: addCollection,
+  },
+  {
+    path: '/collections/edit-collection/:id',
+    name: 'EditCollection',
+    component: editCollection,
   },
   {
     path: '/login',

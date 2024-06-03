@@ -137,7 +137,6 @@
         .post(store.backend.url + store.backend.api + '/auth/register/', form)
         .then((response) => {
           if (response.data.done) {
-            console.log(response.data);
             const token = response.data.token;
             localStorage.setItem('token', token);
             router.push('/');

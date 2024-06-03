@@ -42,15 +42,16 @@
             <th
               scope="row"
               class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-              {{ item.title }}"
+              {{ item.title }}
             </th>
             <td class="px-6 py-4 flex justify-between">
               <p
-                @click="deleteTab(item.id)"
+                @click="deleteItem(item.id)"
                 class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">
                 Delete
               </p>
               <p
+                @click="pushIt(item.id)"
                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                 Edit
               </p>
@@ -67,9 +68,14 @@
   import axios from 'axios';
   import store from '@/store';
   import { RouterLink } from 'vue-router';
+  import router from '@/router';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');
+
+  const pushIt = (id: number) => {
+    router.push(`/collections/edit-collection/${id}`);
+  };
 
   onBeforeMount(() => {
     axios
@@ -78,8 +84,6 @@
       })
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data.success);
-
           items.value = response.data.data; // Assign the data to items
         }
       })
@@ -88,9 +92,16 @@
       });
   });
 
-  const deleteTab = (id: number) => {
-    axios.delete(store.backend.url + store.backend.api + '/tab/delete/' + id, {
-      headers: { authorization: `Bearer ${jwtToken}` },
-    });
+  const deleteItem = (id: number) => {
+    axios
+      .delete(
+        store.backend.url + store.backend.api + '/collection/delete/' + id,
+        {
+          headers: { authorization: `Bearer ${jwtToken}` },
+        }
+      )
+      .then(() => {
+        router.go(0);
+      });
   };
 </script>

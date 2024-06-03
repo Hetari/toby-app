@@ -3,6 +3,7 @@
     type="button"
     class="relative w-full flex justify-center items-center px-5 py-2.5 font-medium tracking-wide capitalize bg-gray-200 dark:bg-black rounded-md group transition duration-300 transform active:scale-95 ease-in-out">
     <svg
+      v-if="icon"
       class="fill-black dark:fill-white"
       xmlns="http://www.w3.org/2000/svg"
       enable-background="new 0 0 24 24"
@@ -31,6 +32,10 @@
     label: {
       type: String,
       required: true,
+    },
+    icon: {
+      type: Boolean,
+      default: true,
     },
   });
 </script>
