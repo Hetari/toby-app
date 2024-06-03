@@ -39,11 +39,14 @@ const createTab = async (req, res) => {
   }
 };
 
-const grtAllTab = async (req, res) => {
+const getAllTab = async (req, res) => {
+  const id = req.user.id;
+
   try {
     const site = await Site.findAll({
       include: [
         {
+          ...(id ? { id: id } : {}),
           model: Collection,
           where: {
             userId: req.user.id,
@@ -84,4 +87,39 @@ const deleteTab = async (req, res) => {
   }
 };
 
-export { createTab, grtAllTab, deleteTab };
+const updateTabPut = async (req, res) => {
+  const { id } = req.params;
+  const { title, url, collectionId } = req.body;
+
+  try {
+    const site = await Site.findOne({
+      where: { id },
+    });
+
+    if (!site) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: ReasonPhrases.NOT_FOUND,
+      });
+    }
+
+    site.title = title;
+    site.url = url;
+    site.collectionId = collectionId;
+
+    await site.save();
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: ReasonPhrases.OK,
+      data: site,
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { createTab, getAllTab, deleteTab, updateTabPut };

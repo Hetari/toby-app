@@ -50,7 +50,7 @@
             <th
               scope="row"
               class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-              {{ item.title }}"
+              {{ item.title }}
             </th>
             <td class="px-6 py-4">{{ item.url }}</td>
             <td class="px-6 py-4">{{ item.Collection.title }}</td>
@@ -60,10 +60,12 @@
                 class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">
                 Delete
               </p>
-              <p
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
-                Edit
-              </p>
+              <router-link :to="`/sites/edit/${item.id}`">
+                <p
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
+                  Edit
+                </p>
+              </router-link>
             </td>
           </tr>
         </tbody>

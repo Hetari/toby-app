@@ -2,8 +2,11 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
+
 import SiteView from '@/views/Tabs/index.vue';
 import addTab from '@/views/Tabs/addTab.vue';
+import editTab from '@/views/Tabs/editTab.vue';
+
 import CollectionView from '@/views/Collections/index.vue';
 import addCollection from '@/views/Collections/AddCollection.vue';
 import editCollection from '@/views/Collections/EditCollection.vue';
@@ -23,6 +26,11 @@ const routes = [
     path: '/sites/add-tab',
     name: 'AddTab',
     component: addTab,
+  },
+  {
+    path: '/sites/edit/:id',
+    name: 'EditTab',
+    component: editTab,
   },
   {
     path: '/collections',

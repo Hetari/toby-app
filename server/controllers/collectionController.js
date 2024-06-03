@@ -90,10 +90,6 @@ const updateCollectionPatch = async (req, res) => {
       where: { id },
     });
 
-    console.log('collection: ', collection);
-    console.log();
-    console.log();
-
     if (!collection) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
@@ -116,7 +112,12 @@ const updateCollectionPatch = async (req, res) => {
       message: ReasonPhrases.OK,
       data: collection,
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 export {
