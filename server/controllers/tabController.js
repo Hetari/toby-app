@@ -42,7 +42,14 @@ const createTab = async (req, res) => {
 const grtAllTab = async (req, res) => {
   try {
     const site = await Site.findAll({
-      include: [{ model: Collection }],
+      include: [
+        {
+          model: Collection,
+          where: {
+            userId: req.user.id,
+          },
+        },
+      ],
     });
     return res.status(StatusCodes.OK).json({
       success: true,
@@ -57,4 +64,24 @@ const grtAllTab = async (req, res) => {
   }
 };
 
-export { createTab, grtAllTab };
+const deleteTab = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const site = await Site.destroy({
+      where: { id },
+    });
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: ReasonPhrases.OK,
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { createTab, grtAllTab, deleteTab };

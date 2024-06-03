@@ -95,9 +95,7 @@ app.use(passport.session());
 
 // using routes
 app.use('/api/v1/auth', authRouter);
-
-// TODO: add auth middleware later
-app.use('/api/v1/tab', tabRouter);
+app.use('/api/v1/tab', authMiddleware, tabRouter);
 app.use('/api/v1/collection', authMiddleware, collectionRouter);
 
 app.post('/api/v1/is-logged-in', authMiddleware, (req, res) => {

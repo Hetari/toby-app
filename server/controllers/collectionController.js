@@ -33,7 +33,9 @@ const createCollection = async (req, res) => {
 
 const getAllCollection = async (req, res) => {
   try {
-    const collections = await Collection.findAll();
+    const collections = await Collection.findAll({
+      where: { userId: req.user.id },
+    });
 
     return res.status(StatusCodes.OK).json({
       success: true,

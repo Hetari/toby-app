@@ -17,9 +17,14 @@
 
           <RouterLink to="/sites">
             <SidebarItem
-              class="border-b border-gray-300 dark:border-gray-700"
               label="Tabs"
               icon="link" />
+          </RouterLink>
+          <RouterLink to="/collections">
+            <SidebarItem
+              class="border-b border-gray-300 dark:border-gray-700"
+              label="Collections"
+              icon="collection" />
           </RouterLink>
 
           <RouterLink to="/login">
