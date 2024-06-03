@@ -8,13 +8,26 @@
       </div>
       <div class="overflow-y-auto overflow-x-hidden flex-grow">
         <ul class="flex flex-col py-4 space-y-1">
-          <SidebarItem
-            label="Dashboard"
-            icon="home" />
+          <RouterLink to="/">
+            <SidebarItem
+              class="border-b border-gray-300 dark:border-gray-700"
+              label="Dashboard"
+              icon="home" />
+          </RouterLink>
 
-          <SidebarItem
-            label="Logout"
-            icon="logout" />
+          <RouterLink to="/sites">
+            <SidebarItem
+              class="border-b border-gray-300 dark:border-gray-700"
+              label="Tabs"
+              icon="link" />
+          </RouterLink>
+
+          <RouterLink to="/login">
+            <SidebarItem
+              @click="logout"
+              label="Logout"
+              icon="logout" />
+          </RouterLink>
         </ul>
       </div>
     </div>
@@ -26,5 +39,10 @@
 </template>
 
 <script setup lang="ts">
+  import { RouterLink } from 'vue-router';
   import { SidebarItem, SearchInput } from './index.ts';
+
+  const logout = () => {
+    localStorage.removeItem('token');
+  };
 </script>
