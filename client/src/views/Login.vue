@@ -107,8 +107,13 @@
   import { onMounted } from 'vue';
 
   onMounted(() => {
-    const jwtToken = localStorage.getItem('token');
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const token = searchParams.get('token');
+
+    const jwtToken = token || localStorage.getItem('token');
     if (jwtToken) {
+      localStorage.setItem('token', jwtToken);
       router.push('/');
     }
   });
@@ -128,9 +133,7 @@
 
   const googleAuthHandler = (e: Event) => {
     e.preventDefault();
-
     const requestUrl = store.backend.url + store.backend.api + '/auth/google/';
-
     window.open(requestUrl, '_self');
   };
 

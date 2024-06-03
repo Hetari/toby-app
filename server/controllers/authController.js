@@ -105,6 +105,21 @@ const googleAuth = passport.authenticate('google', {
   scope: ['profile', 'email'],
 });
 
+// Handles the callback after Google has authenticated the user
+export const googleAuthCallback = (req, res, next) => {
+  passport.authenticate('google', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.redirect('/login'); // Redirect to login page if authentication fails
+    }
+
+    // If authentication is successful, the token is attached to the request
+    const token = req.token;
+
+    // Redirect to the frontend with the token as a query parameter
+    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
+  })(req, res, next);
+};
+
 const logout = async (req, res) => {
   return res.send('Logout...');
 };

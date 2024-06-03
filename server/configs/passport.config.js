@@ -3,6 +3,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import User from '../models/users.js';
 
 import 'dotenv/config';
+import generateToken from '../functions/index.js';
 
 passport.use(
   new GoogleStrategy(
