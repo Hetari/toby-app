@@ -39,4 +39,22 @@ const createTab = async (req, res) => {
   }
 };
 
-export { createTab };
+const grtAllTab = async (req, res) => {
+  try {
+    const site = await Site.findAll({
+      include: [{ model: Collection }],
+    });
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: ReasonPhrases.OK,
+      data: site,
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { createTab, grtAllTab };

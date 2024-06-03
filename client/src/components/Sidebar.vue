@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <aside class="fixed flex flex-col top-0 left-64 h-full w-[85%]">
+    <aside class="fixed flex flex-col top-[2.5%] left-[17%] h-full w-[85%]">
       <slot />
     </aside>
   </section>
