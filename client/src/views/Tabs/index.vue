@@ -72,10 +72,11 @@
 </template>
 
 <script setup lang="ts">
-  import { onBeforeMount, ref } from 'vue';
+  import { onBeforeMount, onMounted, ref } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import { RouterLink } from 'vue-router';
+  import router from '@/router';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');

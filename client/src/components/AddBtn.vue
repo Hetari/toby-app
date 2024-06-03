@@ -22,6 +22,15 @@
         </g>
       </g>
     </svg>
-    <span class="pl-2 mx-1">Create new Tab</span>
+    <span class="pl-2 mx-1">{{ label }}</span>
   </button>
 </template>
+
+<script setup lang="ts">
+  defineProps({
+    label: {
+      type: String,
+      required: true,
+    },
+  });
+</script>

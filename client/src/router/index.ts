@@ -4,6 +4,8 @@ import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import SiteView from '@/views/Tabs/index.vue';
 import addTab from '@/views/Tabs/addTab.vue';
+import CollectionView from '@/views/Collections/index.vue';
+import addCollection from '@/views/Collections/AddCollection.vue';
 
 const routes = [
   {
@@ -20,6 +22,16 @@ const routes = [
     path: '/sites/add-tab',
     name: 'AddTab',
     component: addTab,
+  },
+  {
+    path: '/collections',
+    name: 'Collections',
+    component: CollectionView,
+  },
+  {
+    path: '/collections/add-collection',
+    name: 'AddCollection',
+    component: addCollection,
   },
   {
     path: '/login',

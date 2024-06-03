@@ -69,7 +69,9 @@
         </div>
       </div>
       <div class="mt-5">
-        <AddBtn @click="createTab" />
+        <AddBtn
+          label="Create New Tab"
+          @click="createTab" />
       </div>
     </div>
   </div>
@@ -77,7 +79,7 @@
 
 <script setup lang="ts">
   import router from '@/router';
-  import { ref, Ref, onBeforeMount, onMounted, reactive } from 'vue';
+  import { ref, Ref, onBeforeMount, reactive } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import InputComponent from '@/components/InputComponent.vue';
@@ -148,27 +150,5 @@
       .then((response) => {
         items.value = response.data.data;
       });
-  });
-
-  onMounted(() => {
-    // axios.defaults.baseURL = store.backend.url + store.backend.api;
-    // axios
-    //   .post(
-    //     store.backend.url + store.backend.api + '/is-logged-in/',
-    //     {},
-    //     {
-    //       headers: { authorization: `Bearer ${jwtToken}` },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     if (!response.data.success) {
-    //       localStorage.removeItem('token');
-    //       router.push('/login');
-    //     }
-    //   })
-    //   .catch(() => {
-    //     localStorage.removeItem('token');
-    //     router.push('/login');
-    //   });
   });
 </script>
