@@ -4,6 +4,7 @@ import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import passport from './configs/passport.config.js';
+import multer from 'multer';
 
 // Extra security packages
 import helmet from 'helmet';
@@ -52,8 +53,6 @@ const corsConfig = {
   credentials: true,
 };
 
-// using middlewares
-
 // create and defined the absolute path in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -72,8 +71,25 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
-app.use(morgan('combined', { stream: accessLogStream }));
+// Set up multer to store uploaded files in the 'uploads/' directory
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    // Use the original file name
+    cb(null, file.originalname);
+  },
+});
 
+const upload = multer({ storage: storage });
+
+// using middlewares
+app.use(
+  morgan('combined', {
+    stream: accessLogStream,
+  })
+);
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(helmet());
@@ -87,7 +103,6 @@ app.use(
     // cookie: { secure: true },
   })
 );
-
 // app.use(limiter);
 
 // initialize passport and session
@@ -95,7 +110,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // using routes
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth', upload.single('profile'), authRouter);
 app.use('/api/v1/tab', authMiddleware, tabRouter);
 app.use('/api/v1/collection', authMiddleware, collectionRouter);
 app.use('/api/v1/tag', authMiddleware, tagRouter);

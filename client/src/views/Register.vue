@@ -10,8 +10,8 @@
         <RouterLink
           class="text-blue-600 dark:text-blue-400"
           to="/login"
-          >Login here</RouterLink
-        >
+          >Login here
+        </RouterLink>
       </p>
     </div>
 
@@ -20,6 +20,7 @@
         class="bg-zinc-50 dark:bg-black py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form
           @submit.prevent="login"
+          enctype="multipart/form-data"
           class="space-y-6"
           action="#"
           method="POST">
@@ -51,6 +52,22 @@
               type="password"
               placeholder="Enter your password"
               @input="emitPassword" />
+          </div>
+
+          <div>
+            <div class="font-[sans-serif] max-w-md mx-auto">
+              <label class="text-base text-gray-500 font-semibold mb-2 block"
+                >Upload Progile</label
+              >
+              <input
+                ref="profileFile"
+                name="profile"
+                type="file"
+                class="w-full text-gray-400 font-semibold text-sm bg-white dark:bg-black file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-200 dark:file:bg-zinc-800 file:text-gray-500 rounded" />
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                * PNG, JPG SVG, WEBP, and GIF are Allowed.
+              </p>
+            </div>
           </div>
           <div>
             <button
@@ -92,7 +109,7 @@
   import store from '@/store';
   import axios from 'axios';
   import router from '../router/index.ts';
-  import { reactive } from 'vue';
+  import { reactive, Ref, ref } from 'vue';
 
   import { onMounted } from 'vue';
 
@@ -103,6 +120,7 @@
     }
   });
 
+  const profileFile: Ref<any> = ref(null);
   const form = reactive({
     email: '',
     password: '',
@@ -133,8 +151,26 @@
     e.preventDefault();
 
     if (form.username && form.email && form.password) {
+      const formData = new FormData();
+
+      formData.append('username', form.username);
+      formData.append('email', form.email);
+      formData.append('password', form.password);
+
+      if (profileFile.value && profileFile.value.files[0]) {
+        formData.append('profile', profileFile.value.files[0]);
+      }
+
       axios
-        .post(store.backend.url + store.backend.api + '/auth/register/', form)
+        .post(
+          store.backend.url + store.backend.api + '/auth/register/',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
         .then((response) => {
           if (response.data.success) {
             const token = response.data.token;

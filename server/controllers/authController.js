@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path, { dirname } from 'path';
+
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
@@ -6,6 +9,7 @@ import generateToken from '../functions/index.js';
 
 const register = async (req, res) => {
   const { email, password } = req.body;
+  const profilePath = req.file.path;
 
   if (!email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -13,10 +17,6 @@ const register = async (req, res) => {
       message: ReasonPhrases.BAD_REQUEST,
     });
   }
-
-  // if (password.length < 8) {
-  //   throw new BadRequestError('Password must be at least 8 characters long');
-  // }
 
   // Generate a salt for hashing passwords with cost factor 10, it is basically random bytes
   const salt = await bcrypt.genSalt(10);
@@ -27,6 +27,7 @@ const register = async (req, res) => {
     const user = await User.create({
       email,
       password: encryptedPassword,
+      profilePath,
     });
 
     token = generateToken(user.id, email);

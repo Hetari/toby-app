@@ -4,6 +4,10 @@ import sequelize from './index.js';
 const User = sequelize.define(
   'user',
   {
+    profilePath: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     username: {
       // Allow null for OAuth users
       type: 'string',

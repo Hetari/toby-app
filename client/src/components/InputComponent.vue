@@ -1,7 +1,7 @@
 <template>
   <label
-    for="email"
-    class="block text-sm font-medium">
+    :for="id"
+    class="text-base text-gray-500 font-semibold mb-2 block">
     {{ label }}
   </label>
   <div class="mt-1">
