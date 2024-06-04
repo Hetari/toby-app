@@ -7,6 +7,10 @@ import SiteView from '@/views/Tabs/index.vue';
 import addTab from '@/views/Tabs/addTab.vue';
 import editTab from '@/views/Tabs/editTab.vue';
 
+import TagView from '@/views/Tags/index.vue';
+import addTag from '@/views/Tags/addTag.vue';
+import editTag from '@/views/Tags/editTag.vue';
+
 import CollectionView from '@/views/Collections/index.vue';
 import addCollection from '@/views/Collections/AddCollection.vue';
 import editCollection from '@/views/Collections/EditCollection.vue';
@@ -33,6 +37,21 @@ const routes = [
     component: editTab,
   },
   {
+    path: '/tags',
+    name: 'Tags',
+    component: TagView,
+  },
+  {
+    path: '/tags/add-tag',
+    name: 'AddTag',
+    component: addTag,
+  },
+  {
+    path: '/tags/edit/:id',
+    name: 'EditTag',
+    component: editTag,
+  },
+  {
     path: '/collections',
     name: 'Collections',
     component: CollectionView,
@@ -47,6 +66,7 @@ const routes = [
     name: 'EditCollection',
     component: editCollection,
   },
+
   {
     path: '/login',
     name: 'Login',

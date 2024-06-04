@@ -3,21 +3,21 @@
     <div
       v-if="items.length == 0"
       class="relative h-40">
-      <p class="text-center text-red-500 font-bold text-xl">There is no tabs</p>
+      <p class="text-center text-red-500 font-bold text-xl">There is no tags</p>
 
       <router-link
-        to="/sites/add-tab"
+        to="/tags/add-tag"
         class="text-white bg-black py-2 px-4 rounded absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         Add
       </router-link>
     </div>
     <div v-else>
-      < class="flex flex-1 justify-between w-[90%] my-5">
-      <h1>Tabs</h1>
-      <router-link to="/sites/add-tab">
-        <button class="text-white bg-black py-2 px-4 rounded">Add</button>
-      </router-link>
-
+      <div class="flex flex-1 justify-between w-[90%] my-5">
+        <h1>Tags</h1>
+        <router-link to="/tags/add-tag">
+          <button class="text-white bg-black py-2 px-4 rounded">Add</button>
+        </router-link>
+      </div>
       <table class="text-sm text-left rtl:text-right w-[90%]">
         <thead class="text-xs uppercase bg-zinc-100 dark:bg-black">
           <tr>
@@ -25,16 +25,6 @@
               scope="col"
               class="px-6 py-3">
               title
-            </th>
-            <th
-              scope="col"
-              class="px-6 py-3">
-              url
-            </th>
-            <th
-              scope="col"
-              class="px-6 py-3">
-              collection
             </th>
 
             <th
@@ -54,15 +44,13 @@
               class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
               {{ item.title }}
             </th>
-            <td class="px-6 py-4">{{ item.url }}</td>
-            <td class="px-6 py-4">{{ item.Collection.title }}</td>
             <td class="px-6 py-4 flex justify-between">
               <p
                 @click="deleteTab(item.id)"
                 class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">
                 Delete
               </p>
-              <router-link :to="`/sites/edit/${item.id}`">
+              <router-link :to="`/tags/edit/${item.id}`">
                 <p
                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                   Edit
@@ -88,16 +76,18 @@
 
   onBeforeMount(() => {
     axios
-      .get(store.backend.url + store.backend.api + '/tab', {
+      .get(store.backend.url + store.backend.api + '/tag', {
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
+        // console.log(response.data.data);
+
         items.value = response.data.data;
       });
   });
   const deleteTab = (id: number) => {
     axios
-      .delete(store.backend.url + store.backend.api + '/tab/delete/' + id, {
+      .delete(store.backend.url + store.backend.api + '/tag/delete/' + id, {
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then(() => {

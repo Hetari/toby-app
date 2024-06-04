@@ -20,6 +20,13 @@
               label="Tabs"
               icon="link" />
           </RouterLink>
+
+          <RouterLink to="/tags">
+            <SidebarItem
+              label="Tags"
+              icon="tag" />
+          </RouterLink>
+
           <RouterLink to="/collections">
             <SidebarItem
               class="border-b border-gray-300 dark:border-gray-700"

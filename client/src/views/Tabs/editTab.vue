@@ -146,7 +146,7 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         router.push('/sites');
       });
   };

@@ -1,8 +1,8 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import Site from '../models/sites.js';
+import Tag from '../models/tags.js';
 import Collection from '../models/collections.js';
 
-const createTab = async (req, res) => {
+const createTag = async (req, res) => {
   const { title, url, collection } = req.body;
   if (!title || title.trim().length === 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -12,17 +12,15 @@ const createTab = async (req, res) => {
   }
 
   try {
-    // TODO: add description, customTitle, customDescription
-    const site = await Site.create({
+    const tag = await Tag.create({
       title,
-      collectionId: collection,
-      url,
+      userId: req.user.id,
     });
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
-      message: 'Tab created successfully',
-      data: site,
+      message: 'Tag created successfully',
+      data: tag,
     });
   } catch (error) {
     return res
@@ -39,25 +37,26 @@ const createTab = async (req, res) => {
   }
 };
 
-const getAllTab = async (req, res) => {
+const getAllTag = async (req, res) => {
   const id = req.user.id;
-  // TODO: fix the query
+
   try {
-    const site = await Site.findAll({
+    const tag = await Tag.findAll({
+      where: {
+        userId: id,
+      },
+
       include: [
         {
-          ...(id ? { id: id } : {}),
           model: Collection,
-          where: {
-            userId: req.user.id,
-          },
         },
       ],
     });
+
     return res.status(StatusCodes.OK).json({
       success: true,
       message: ReasonPhrases.OK,
-      data: site,
+      data: tag,
     });
   } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -67,11 +66,11 @@ const getAllTab = async (req, res) => {
   }
 };
 
-const deleteTab = async (req, res) => {
+const deleteTag = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const site = await Site.destroy({
+    const tag = await Tag.destroy({
       where: { id },
     });
 
@@ -87,32 +86,29 @@ const deleteTab = async (req, res) => {
   }
 };
 
-const updateTabPut = async (req, res) => {
+const updateTagPut = async (req, res) => {
   const { id } = req.params;
   const { title, url, collectionId } = req.body;
 
   try {
-    const site = await Site.findOne({
+    const tag = await Tag.findOne({
       where: { id },
     });
 
-    if (!site) {
+    if (!tag) {
       return res.status(StatusCodes.NOT_FOUND).json({
         success: false,
         message: ReasonPhrases.NOT_FOUND,
       });
     }
 
-    site.title = title;
-    site.url = url;
-    site.collectionId = collectionId;
-
-    await site.save();
+    tag.title = title;
+    await tag.save();
 
     return res.status(StatusCodes.OK).json({
       success: true,
       message: ReasonPhrases.OK,
-      data: site,
+      data: tag,
     });
   } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -122,4 +118,4 @@ const updateTabPut = async (req, res) => {
   }
 };
 
-export { createTab, getAllTab, deleteTab, updateTabPut };
+export { createTag, getAllTag, deleteTag, updateTagPut };

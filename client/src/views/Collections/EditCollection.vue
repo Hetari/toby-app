@@ -118,7 +118,7 @@
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       });
   };
 </script>
