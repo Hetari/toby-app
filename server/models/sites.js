@@ -18,20 +18,20 @@ const Site = sequelize.define(
       },
     },
 
-    description: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // description: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
 
-    customTitle: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // customTitle: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
 
-    customDescription: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // customDescription: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
   },
   {
     modelName: 'Site',

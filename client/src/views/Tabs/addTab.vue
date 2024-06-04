@@ -60,10 +60,10 @@
             </option>
 
             <option
-              v-for="item in items"
-              :key="item.id"
-              :value="item.collectionId">
-              {{ item.Collection.title }}
+              v-for="collection in items"
+              :key="collection.id"
+              :value="collection.id">
+              {{ collection.title }}
             </option>
           </select>
         </div>
@@ -140,6 +140,8 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
+        console.log(response.data.data);
+
         items.value = response.data.data;
       });
   });

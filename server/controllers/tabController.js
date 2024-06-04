@@ -4,6 +4,13 @@ import Collection from '../models/collections.js';
 
 const createTab = async (req, res) => {
   const { title, url, collection } = req.body;
+
+  console.log();
+  console.log();
+  console.log(title, url, collection);
+  console.log();
+  console.log();
+
   if (!title || title.trim().length === 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       success: false,
@@ -25,6 +32,12 @@ const createTab = async (req, res) => {
       data: site,
     });
   } catch (error) {
+    console.log();
+    console.log();
+    console.log();
+    console.log();
+    console.error(error);
+
     return res
       .status(
         error.message.startsWith('Validation error')

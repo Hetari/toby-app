@@ -31,14 +31,6 @@ const createCollection = async (req, res) => {
       await tag.addCollection(collection);
     }
 
-    console.log();
-    console.log();
-    console.log();
-    console.log(tagId);
-    console.log();
-    console.log();
-    console.log();
-
     return res.status(StatusCodes.CREATED).json({
       success: true,
       message: ReasonPhrases.CREATED,

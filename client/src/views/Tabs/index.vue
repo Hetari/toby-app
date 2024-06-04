@@ -12,11 +12,12 @@
       </router-link>
     </div>
     <div v-else>
-      < class="flex flex-1 justify-between w-[90%] my-5">
-      <h1>Tabs</h1>
-      <router-link to="/sites/add-tab">
-        <button class="text-white bg-black py-2 px-4 rounded">Add</button>
-      </router-link>
+      <div class="flex flex-1 justify-between w-[90%] my-5">
+        <h1>Tabs</h1>
+        <router-link to="/sites/add-tab">
+          <button class="text-white bg-black py-2 px-4 rounded">Add</button>
+        </router-link>
+      </div>
 
       <table class="text-sm text-left rtl:text-right w-[90%]">
         <thead class="text-xs uppercase bg-zinc-100 dark:bg-black">
