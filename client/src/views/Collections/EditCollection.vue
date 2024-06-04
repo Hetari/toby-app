@@ -1,4 +1,5 @@
 <template>
+  form: {{ form }}
   <div class="flex h-screen">
     <div class="m-auto">
       <div class="mt-5 bg-gray-200 dark:bg-black rounded-lg shadow">
@@ -64,6 +65,32 @@
               stroke-linejoin="round" />
           </svg>
         </div>
+        <div class="px-5 pb-5">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Select an option</label
+          >
+          <select
+            ref="select"
+            @change="emitTag"
+            id="countries"
+            class="theme text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
+            <option
+              selected
+              disabled>
+              Choose tag
+            </option>
+
+            <option
+              v-for="item in items"
+              :key="item.id"
+              :value="item.id">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+
         <!-- TODO: add the space select here -->
       </div>
       <div class="mt-5">
@@ -79,33 +106,55 @@
 <script setup lang="ts">
   import EditInputComponent from '@/components/EditInputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
-  import { onBeforeMount, reactive, ref } from 'vue';
+  import { onBeforeMount, reactive, Ref, ref } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import router from '@/router';
 
   const jwtToken = localStorage.getItem('token');
   const id = ref('');
+  const items: Ref<any[]> = ref([]);
+  const select: any = ref(null);
 
   const form = reactive({
     title: '',
     isStared: false,
+    tag: '',
   });
 
   const emitTitle = (data: string) => {
     form.title = data;
   };
 
+  const emitTag = (e: any) => {
+    if (e && e.target) {
+      form.tag = e.target.value;
+    }
+  };
+
   onBeforeMount(() => {
     id.value = router.currentRoute.value.params.id as string;
+
+    axios
+      .get(store.backend.url + store.backend.api + '/tag', {
+        headers: { authorization: `Bearer ${jwtToken}` },
+      })
+      .then((response) => {
+        // console.log(response.data.data);
+        items.value = response.data.data;
+      });
 
     axios
       .get(store.backend.url + store.backend.api + '/collection/' + id.value, {
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
+        console.log('Hi: ', response.data.data);
+
         form.title = response.data.data[0].title;
         form.isStared = response.data.data[0].isStared;
+
+        form.tag = select.value.value = response.data.data[0].tags[0].id;
       });
   });
   const editCollection = () => {

@@ -17,10 +17,12 @@ Tag.belongsTo(User, {
 
 Tag.belongsToMany(Collection, {
   through: TagCollection,
+  foreignKey: 'tagId',
 });
 
 Collection.belongsToMany(Tag, {
   through: TagCollection,
+  foreignKey: 'collectionId',
 });
 
 export default Tag;

@@ -1,9 +1,10 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import Collection from '../models/collections.js';
+import Tag from '../models/tags.js';
 
 // TODO: add space logic
 const createCollection = async (req, res) => {
-  const { title, isStared } = req.body;
+  const { title, isStared, tagId } = req.body;
 
   if (!title || title.trim().length === 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -19,7 +20,24 @@ const createCollection = async (req, res) => {
       userId: req.user.id,
     });
 
-    console.error(collection.isNewRecord);
+    if (tagId) {
+      const tag = await Tag.findByPk(tagId);
+      if (!tag) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          success: false,
+          message: 'Invalid tag',
+        });
+      }
+      await tag.addCollection(collection);
+    }
+
+    console.log();
+    console.log();
+    console.log();
+    console.log(tagId);
+    console.log();
+    console.log();
+    console.log();
 
     return res.status(StatusCodes.CREATED).json({
       success: true,
@@ -35,10 +53,14 @@ const createCollection = async (req, res) => {
 };
 
 const getAllCollection = async (req, res) => {
-  const id = req.user.id;
-
+  const id = req.params.id;
   try {
     const collections = await Collection.findAll({
+      include: [
+        {
+          model: Tag,
+        },
+      ],
       where: {
         ...(id ? { id: id } : {}),
         userId: req.user.id,

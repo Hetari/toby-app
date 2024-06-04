@@ -63,6 +63,31 @@
               stroke-linejoin="round" />
           </svg>
         </div>
+        <div class="px-5 pb-5">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Select an option</label
+          >
+          <select
+            @change="emitTag"
+            id="countries"
+            class="theme text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
+            <option
+              selected
+              disabled>
+              Choose tag
+            </option>
+
+            <option
+              v-for="item in items"
+              :key="item.id"
+              :value="item.id">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+
         <!-- TODO: add the space select here -->
       </div>
       <div class="mt-5">
@@ -77,21 +102,39 @@
 <script setup lang="ts">
   import InputComponent from '@/components/InputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
-  import { reactive } from 'vue';
+  import { onBeforeMount, reactive, Ref, ref } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import router from '@/router';
 
+  const items: Ref<any[]> = ref([]);
   const jwtToken = localStorage.getItem('token');
 
   const form = reactive({
     title: '',
     isStared: false,
+    tagId: '',
   });
 
   const emitTitle = (data: string) => {
     form.title = data;
   };
+
+  const emitTag = (e: any) => {
+    if (e && e.target) {
+      form.tagId = e.target.value;
+    }
+  };
+
+  onBeforeMount(() => {
+    axios
+      .get(store.backend.url + store.backend.api + '/tag', {
+        headers: { authorization: `Bearer ${jwtToken}` },
+      })
+      .then((response) => {
+        items.value = response.data.data;
+      });
+  });
 
   const createCollection = () => {
     axios
