@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from './index.js';
 import User from './users.js';
 
@@ -21,14 +21,14 @@ const Collection = sequelize.define(
 
 Collection.belongsTo(User, {
   foreignKey: 'userId',
-  // onDelete: 'CASCADE',
-  // onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
 });
 
 User.hasMany(Collection, {
   foreignKey: 'userId',
-  // onDelete: 'CASCADE',
-  // onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
 });
 
 export default Collection;

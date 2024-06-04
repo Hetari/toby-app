@@ -1,5 +1,4 @@
 <template>
-  form: {{ form }}
   <div class="flex h-screen">
     <div class="m-auto">
       <div class="mt-5 bg-gray-200 dark:bg-black rounded-lg shadow">
