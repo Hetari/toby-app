@@ -10,13 +10,6 @@
         <ul class="flex flex-col py-4 space-y-1">
           <RouterLink to="/">
             <SidebarItem
-              class="border-b border-gray-300 dark:border-gray-700"
-              label="Dashboard"
-              icon="home" />
-          </RouterLink>
-
-          <RouterLink to="/sites">
-            <SidebarItem
               label="Tabs"
               icon="link" />
           </RouterLink>

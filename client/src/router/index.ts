@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
-import Home from '@/views/Home.vue';
+// import Home from '@/views/Home.vue';
 
 import SiteView from '@/views/Tabs/index.vue';
 import addTab from '@/views/Tabs/addTab.vue';
@@ -18,11 +18,6 @@ import editCollection from '@/views/Collections/EditCollection.vue';
 const routes = [
   {
     path: '/',
-    name: 'home', // or any name you want
-    component: Home,
-  },
-  {
-    path: '/sites',
     name: 'Sites',
     component: SiteView,
   },

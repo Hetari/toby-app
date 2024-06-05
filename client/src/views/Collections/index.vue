@@ -78,6 +78,7 @@
   };
 
   onBeforeMount(() => {
+    store.checkAuth();
     axios
       .get(store.backend.url + store.backend.api + '/collection/', {
         headers: { authorization: `Bearer ${jwtToken}` },

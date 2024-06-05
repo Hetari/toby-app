@@ -75,6 +75,8 @@
   const jwtToken = localStorage.getItem('token');
 
   onBeforeMount(() => {
+    store.checkAuth();
+
     axios
       .get(store.backend.url + store.backend.api + '/tag', {
         headers: { authorization: `Bearer ${jwtToken}` },
