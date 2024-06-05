@@ -131,11 +131,22 @@ app.use((err, req, res, next) => {
 // start the server
 const serverStart = async () => {
   try {
-    await sequelize.sync({
-      alter: true,
-      force: !true,
-      // logging: false,
-    });
+    try {
+      // TODO: in linux (fedora) it is necessary to create the user and alter the password every time your OS restarts. You can do it like this:
+      // $ sudo -i -u postgres
+      // $ createuser --interactive USERNAME_OF_THE_PC
+      // $ psql
+      // # ALTER USER [USERNAME_OF_THE_PC] WITH PASSWORD 'strong_password';
+
+      await sequelize.authenticate();
+      await sequelize.sync({
+        alter: true,
+        force: !true,
+        // logging: false,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
     console.info('Database connected...');
 
     const port = process.env.PORT || 3000;

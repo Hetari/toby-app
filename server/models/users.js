@@ -10,7 +10,7 @@ const User = sequelize.define(
     },
     username: {
       // Allow null for OAuth users
-      type: 'string',
+      type: DataTypes.STRING,
       allowNull: true,
     },
 
@@ -40,6 +40,10 @@ const User = sequelize.define(
       allowNull: true,
       // Ensure unique IDs for OAuth users
       unique: true,
+    },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user',
     },
   },
   {
