@@ -15,6 +15,10 @@ import CollectionView from '@/views/Collections/index.vue';
 import addCollection from '@/views/Collections/AddCollection.vue';
 import editCollection from '@/views/Collections/EditCollection.vue';
 
+import organizationView from '@/views/Organization/index.vue';
+import addOrganization from '@/views/Organization/addOrg.vue';
+import editOrganization from '@/views/Organization/editOrg.vue';
+
 const routes = [
   {
     path: '/',
@@ -60,6 +64,21 @@ const routes = [
     path: '/collections/edit-collection/:id',
     name: 'EditCollection',
     component: editCollection,
+  },
+  {
+    path: '/organizations',
+    name: 'Organization',
+    component: organizationView,
+  },
+  {
+    path: '/organizations/add',
+    name: 'AddOrganization',
+    component: addOrganization,
+  },
+  {
+    path: '/organizations/edit/:id',
+    name: 'EditOrganization',
+    component: editOrganization,
   },
 
   {

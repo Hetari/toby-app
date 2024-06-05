@@ -24,11 +24,12 @@ import sequelize from './models/index.js';
 // import routes
 import authRouter from './routes/authRoute.js';
 import tabRouter from './routes/tabRoute.js';
+import collectionRouter from './routes/collectionRouter.js';
+import tagRouter from './routes/tagRoute.js';
+import organizationRouter from './routes/organizationRoute.js';
 
 import authMiddleware from './middleware/authMiddleware.js';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import collectionRouter from './routes/collectionRouter.js';
-import tagRouter from './routes/tagRoute.js';
 
 // create app
 const app = express();
@@ -100,7 +101,7 @@ app.use(
     // cookie: { secure: true },
   })
 );
-// app.use(limiter);
+app.use(limiter);
 
 // initialize passport and session
 app.use(passport.initialize());
@@ -111,6 +112,8 @@ app.use('/api/v1/auth', upload.single('profile'), authRouter);
 app.use('/api/v1/tab', authMiddleware, tabRouter);
 app.use('/api/v1/collection', authMiddleware, collectionRouter);
 app.use('/api/v1/tag', authMiddleware, tagRouter);
+app.use('/api/v1/organization', authMiddleware, organizationRouter);
+
 app.post('/api/v1/is-logged-in', authMiddleware, (req, res) => {
   return res.status(StatusCodes.OK).json({
     success: true,

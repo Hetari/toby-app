@@ -23,9 +23,15 @@
 
           <RouterLink to="/collections">
             <SidebarItem
-              class="border-b border-gray-300 dark:border-gray-700"
               label="Collections"
               icon="collection" />
+          </RouterLink>
+
+          <RouterLink to="/organizations">
+            <SidebarItem
+              class="border-b border-gray-300 dark:border-gray-700"
+              label="Organizations"
+              icon="organization" />
           </RouterLink>
 
           <RouterLink to="/login">
@@ -49,11 +55,14 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { SidebarItem, SearchInput } from './index.ts';
-  import { onMounted, Ref, ref } from 'vue';
-  let jwt: Ref<string | null> = ref('');
+  import { onMounted, ref } from 'vue';
+  let jwt = ref('');
 
   onMounted(() => {
-    jwt.value = localStorage.getItem('token');
+    jwt.value = localStorage.getItem('token') as string;
+    setTimeout(() => {
+      jwt.value = localStorage.getItem('token') as string;
+    }, 5000);
   });
 
   const logout = () => {
