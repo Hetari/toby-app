@@ -148,11 +148,11 @@ const serverStart = async () => {
     }
     console.info('Database connected...');
 
-    const port = process.env.PORT || 3000;
-    const host = process.env.HOST || 'localhost';
+    const port = process.env.EXPRESS_PORT || 3000;
+    const host = process.env.EXPRESS_HOST || 'localhost';
 
     app.listen(port, () => {
-      console.log(`Server is running on http://${host}:${port}`);
+      console.debug(`Server is running on http://${host}:${port}`);
     });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
