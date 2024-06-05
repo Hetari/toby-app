@@ -41,10 +41,6 @@ const User = sequelize.define(
       // Ensure unique IDs for OAuth users
       unique: true,
     },
-    role: {
-      type: DataTypes.STRING,
-      defaultValue: 'user',
-    },
   },
   {
     modelName: 'User',

@@ -19,9 +19,6 @@ import { fileURLToPath } from 'url';
 import morgan from 'morgan';
 
 // import DB
-// import User from './models/users.js';
-// import Site from './models/sites.js';
-// import Collection from './models/collections.js';
 import sequelize from './models/index.js';
 
 // import routes
@@ -114,7 +111,6 @@ app.use('/api/v1/auth', upload.single('profile'), authRouter);
 app.use('/api/v1/tab', authMiddleware, tabRouter);
 app.use('/api/v1/collection', authMiddleware, collectionRouter);
 app.use('/api/v1/tag', authMiddleware, tagRouter);
-
 app.post('/api/v1/is-logged-in', authMiddleware, (req, res) => {
   return res.status(StatusCodes.OK).json({
     success: true,
@@ -132,11 +128,14 @@ app.use((err, req, res, next) => {
 const serverStart = async () => {
   try {
     try {
-      // TODO: in linux (fedora) it is necessary to create the user and alter the password every time your OS restarts. You can do it like this:
+      // in linux (fedora) it is necessary to create the user and alter the password every time your OS restarts. You can do it like this:
       // $ sudo -i -u postgres
-      // $ createuser --interactive USERNAME_OF_THE_PC
+      // $ createuser --interactive [USERNAME_OF_THE_PC]
+      // $ createdb [USERNAME_OF_THE_PC]
       // $ psql
       // # ALTER USER [USERNAME_OF_THE_PC] WITH PASSWORD 'strong_password';
+      // # CREATE DATABASE [APP_DB_NAME];
+      // # exit
 
       await sequelize.authenticate();
       await sequelize.sync({
