@@ -101,7 +101,7 @@ app.use(
     // cookie: { secure: true },
   })
 );
-app.use(limiter);
+// app.use(limiter);
 
 // initialize passport and session
 app.use(passport.initialize());
