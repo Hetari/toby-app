@@ -4,8 +4,6 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import User from '../models/users.js';
 import generateToken from '../functions/index.js';
 
-import Role from '../roles/role.js';
-
 const register = async (req, res) => {
   const { email, password, username } = req.body;
   const profilePath = req.file.path;

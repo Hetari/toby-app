@@ -8,10 +8,4 @@
 
 <script setup lang="ts">
   import Sidebar from '@/components/Sidebar.vue';
-  import { onMounted } from 'vue';
-  import store from './store';
-
-  onMounted(() => {
-    store.checkAuth();
-  });
 </script>

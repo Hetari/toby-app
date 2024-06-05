@@ -1,6 +1,7 @@
 <template>
   <section class="sidebar flex-1">
     <div
+      v-if="jwt"
       class="fixed flex flex-col top-0 left-0 w-[15%] h-full bg-slate-100 dark:bg-black">
       <div
         class="flex items-center justify-center h-20 border-b border-gray-300 dark:border-gray-700">
@@ -37,7 +38,9 @@
       </div>
     </div>
 
-    <aside class="fixed flex flex-col top-[2.5%] left-[17%] h-full w-[85%]">
+    <aside
+      class="fixed flex flex-col top-[2.5%] left-[17%] h-full w-[85%]"
+      :class="{ '!w-[100%] !left-0': !jwt }">
       <slot />
     </aside>
   </section>
@@ -46,6 +49,12 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { SidebarItem, SearchInput } from './index.ts';
+  import { onMounted, Ref, ref } from 'vue';
+  let jwt: Ref<string | null> = ref('');
+
+  onMounted(() => {
+    jwt.value = localStorage.getItem('token');
+  });
 
   const logout = () => {
     localStorage.removeItem('token');
