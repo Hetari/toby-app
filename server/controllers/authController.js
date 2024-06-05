@@ -1,14 +1,13 @@
-import fs from 'fs';
-import path, { dirname } from 'path';
-
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import User from '../models/users.js';
 import generateToken from '../functions/index.js';
 
+import Role from '../roles/role.js';
+
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
   const profilePath = req.file.path;
 
   if (!email || !password) {
@@ -25,9 +24,10 @@ const register = async (req, res) => {
   let token = null;
   try {
     const user = await User.create({
+      username,
       email,
-      password: encryptedPassword,
       profilePath,
+      password: encryptedPassword,
     });
 
     token = generateToken(user.id, email);
