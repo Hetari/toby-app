@@ -109,6 +109,7 @@
   import axios from 'axios';
   import store from '@/store';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
   const id = ref('');
@@ -148,8 +149,6 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
-        console.log('Hi: ', response.data.data);
-
         form.title = response.data.data[0].title;
         form.isStared = response.data.data[0].isStared;
 
@@ -166,7 +165,13 @@
         }
       )
       .then((response) => {
-        // console.log(response.data);
+        if (response.data.success) {
+          useToast().success('Collection updated successfully');
+          router.push('/collections');
+        }
+      })
+      .catch((error) => {
+        useToast().error(error.message);
       });
   };
 </script>

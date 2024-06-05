@@ -87,6 +87,7 @@
   import store from '@/store';
   import EditInputComponent from '@/components/EditInputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
   const id = ref('');
@@ -146,7 +147,7 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
-        // console.log(response.data);
+        useToast().success(response.data.message);
         router.push('/sites');
       });
   };

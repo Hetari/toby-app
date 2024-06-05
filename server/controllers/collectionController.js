@@ -2,7 +2,6 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import Collection from '../models/collections.js';
 import Tag from '../models/tags.js';
 
-// TODO: add space logic
 const createCollection = async (req, res) => {
   const { title, isStared, tagId } = req.body;
 

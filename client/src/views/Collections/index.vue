@@ -69,6 +69,7 @@
   import store from '@/store';
   import { RouterLink } from 'vue-router';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');
@@ -89,7 +90,7 @@
         }
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        useToast().error(error.message);
       });
   });
 
@@ -103,6 +104,9 @@
       )
       .then(() => {
         router.go(0);
+      })
+      .catch((error) => {
+        useToast().error(error.message);
       });
   };
 </script>

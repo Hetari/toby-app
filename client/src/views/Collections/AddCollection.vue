@@ -106,6 +106,7 @@
   import axios from 'axios';
   import store from '@/store';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   const items: Ref<any[]> = ref([]);
   const jwtToken = localStorage.getItem('token');
@@ -149,12 +150,13 @@
       )
       .then((response) => {
         if (response.data.success) {
-          alert('Collection created successfully');
-          router.go(0);
+          router.push('/collections');
+
+          useToast().success('Collection created successfully');
         }
       })
       .catch((error) => {
-        console.log(error);
+        useToast().error(error.message);
       });
   };
 </script>

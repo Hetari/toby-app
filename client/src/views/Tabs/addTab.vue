@@ -84,6 +84,7 @@
   import store from '@/store';
   import InputComponent from '@/components/InputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
 
@@ -112,7 +113,7 @@
   // create tab
   const createTab = () => {
     if (!form.title || !form.url || !form.collection) {
-      alert('Please fill in all fields');
+      useToast().error('Please fill in all fields');
       return;
     }
 
@@ -122,15 +123,14 @@
       })
       .then((response) => {
         if (response.data.success) {
-          alert('Tab created successfully');
-          // router.push('/tabs');
+          useToast().success('Tab created successfully');
         }
       })
       .then(() => {
-        router.go(0);
+        router.push('/');
       })
       .catch((error) => {
-        console.log(error);
+        useToast().error(error.message);
       });
   };
 
@@ -140,8 +140,6 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
-        console.log(response.data.data);
-
         items.value = response.data.data;
       });
   });

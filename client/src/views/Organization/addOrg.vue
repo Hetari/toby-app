@@ -64,6 +64,7 @@
   import store from '@/store';
   import InputComponent from '@/components/InputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
 
@@ -77,7 +78,7 @@
 
   const createOrg = () => {
     if (!form.title) {
-      alert('Please fill in all fields');
+      useToast().error('Please fill in all fields');
       return;
     }
 
@@ -91,12 +92,12 @@
       )
       .then((response) => {
         if (response.data.success) {
-          alert('Organization created successfully');
+          useToast().success('Organization created successfully');
           router.push('/organizations');
         }
       })
       .catch((error) => {
-        console.log(error);
+        useToast().error(error.message);
       });
   };
 </script>

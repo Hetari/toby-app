@@ -70,6 +70,7 @@
   import store from '@/store';
   import { RouterLink } from 'vue-router';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');
@@ -82,8 +83,6 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then((response) => {
-        // console.log(response.data.data);
-
         items.value = response.data.data;
       });
   });
@@ -93,6 +92,7 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then(() => {
+        useToast().success('Tag deleted successfully');
         router.go(0);
       });
   };

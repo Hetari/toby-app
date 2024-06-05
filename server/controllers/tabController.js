@@ -13,7 +13,6 @@ const createTab = async (req, res) => {
   }
 
   try {
-    // TODO: add description, customTitle, customDescription
     const site = await Site.create({
       title,
       collectionId: collection,

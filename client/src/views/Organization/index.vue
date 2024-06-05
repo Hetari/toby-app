@@ -182,6 +182,7 @@
   import store from '@/store';
   import { RouterLink } from 'vue-router';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   let code = defineModel();
 
@@ -191,12 +192,12 @@
 
   const copy = (text: string) => {
     navigator.clipboard.writeText(text);
-    alert('Copied to clipboard');
+    useToast().info('Copied to clipboard');
   };
 
   const joinHandle = () => {
     if (code.value === '') {
-      alert('Please enter a code');
+      useToast().error('Please enter a code');
       return;
     }
     axios
@@ -236,7 +237,7 @@
         }
       )
       .then(() => {
-        router.push('/organizations');
+        router.go(0);
       });
   };
 
@@ -249,9 +250,7 @@
         }
       )
       .then((response) => {
-        console.log(response.data);
-
-        // router.go(0);
+        router.go(0);
       });
   };
 </script>

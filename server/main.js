@@ -82,6 +82,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// TODO: add rbac
 // using middlewares
 app.use(
   morgan('combined', {

@@ -100,6 +100,7 @@
 </template>
 
 <script setup lang="ts">
+  import { useToast } from 'vue-toastification';
   import InputComponent from '@/components/FormInputComponent.vue';
   import LoginIcon from '@/components/LoginIcon.vue';
   import store from '@/store';
@@ -144,31 +145,24 @@
     e.preventDefault();
 
     if (form.email && form.password) {
-      // TODO: delete all comments later
-      // axios.defaults.withCredentials = true;
-      // axios.defaults.baseURL = store.backend.url + store.backend.api;
-
       axios
-        .post(
-          store.backend.url + store.backend.api + '/auth/login/',
-          form
-          // , {
-          //   withCredentials: true,
-          // }
-        )
+        .post(store.backend.url + store.backend.api + '/auth/login/', form)
         .then((response) => {
           if (response.data && response.data.success) {
             const token = response.data.token;
 
             localStorage.setItem('token', token);
+
+            useToast().success('Login successful');
+
             router.push('/');
           }
         })
         .catch(() => {
-          alert('There is no user with this email and password');
+          useToast().error('Login failed');
         });
     } else {
-      alert('Email and password are required');
+      useToast().error('fields can not be empty');
     }
   };
 </script>

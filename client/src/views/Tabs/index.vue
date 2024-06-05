@@ -83,6 +83,7 @@
   import store from '@/store';
   import { RouterLink } from 'vue-router';
   import router from '@/router';
+  import { useToast } from 'vue-toastification';
 
   const items: any = ref([]);
   const jwtToken = localStorage.getItem('token');
@@ -104,6 +105,7 @@
         headers: { authorization: `Bearer ${jwtToken}` },
       })
       .then(() => {
+        useToast().success('Delete success');
         router.go(0);
       });
   };

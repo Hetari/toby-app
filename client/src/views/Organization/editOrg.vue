@@ -66,6 +66,7 @@
   import store from '@/store';
   import EditInputComponent from '@/components/EditInputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
   const id = ref('');
@@ -112,8 +113,12 @@
         }
       )
       .then((response) => {
-        // console.log(response.data);
-        router.push('/organizations');
+        if (response.data.success) {
+          useToast().success('Organization updated successfully');
+          router.push('/organizations');
+        } else {
+          useToast().error(response.data.message);
+        }
       });
   };
 </script>

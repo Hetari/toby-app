@@ -113,7 +113,7 @@
   import axios from 'axios';
   import router from '../router/index.ts';
   import { reactive, Ref, ref } from 'vue';
-
+  import { useToast } from 'vue-toastification';
   import { onMounted } from 'vue';
 
   onMounted(() => {
@@ -178,15 +178,15 @@
           if (response.data.success) {
             const token = response.data.token;
             localStorage.setItem('token', token);
-
+            useToast().success('Registration Successful');
             router.push('/');
           }
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          useToast().error('Registration Failed');
         });
     } else {
-      alert('Email, username and password are required');
+      useToast().error('Email, username and password are required');
     }
   };
 </script>

@@ -3,4 +3,8 @@ import App from './App.vue';
 import router from './router';
 import './style.css';
 
-createApp(App).use(router).mount('#app');
+import Toast, { PluginOptions } from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+const options: PluginOptions = {};
+
+createApp(App).use(router).use(Toast, options).mount('#app');

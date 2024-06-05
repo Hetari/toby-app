@@ -56,6 +56,7 @@
   import store from '@/store';
   import InputComponent from '@/components/InputComponent.vue';
   import AddBtn from '@/components/AddBtn.vue';
+  import { useToast } from 'vue-toastification';
 
   const jwtToken = localStorage.getItem('token');
 
@@ -69,7 +70,7 @@
 
   const createTag = () => {
     if (!form.title) {
-      alert('Please fill in title');
+      useToast().error('Please fill in title');
       return;
     }
 
@@ -79,14 +80,14 @@
       })
       .then((response) => {
         if (response.data.success) {
-          alert('Tag created successfully');
+          useToast().success('Tag created successfully');
         }
       })
       .then(() => {
         // router.go(0);
       })
       .catch((error) => {
-        console.log(error);
+        useToast().error(error.message);
       });
   };
 </script>
