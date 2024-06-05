@@ -30,6 +30,7 @@
               id="login-username"
               name="login-username"
               type="text"
+              errorMessage="Please enter a valid username"
               placeholder="Enter your username"
               @input="emitUsername" />
           </div>
@@ -40,12 +41,14 @@
               id="login-email"
               name="login-email"
               type="email"
+              errorMessage="Please enter a valid email"
               placeholder="Enter your email address"
               @input="emitEmail" />
           </div>
 
           <div>
             <InputComponent
+              errorMessage="Please enter a valid password"
               label="Password"
               id="login-password"
               name="login-password"
@@ -69,11 +72,11 @@
               </p>
             </div>
           </div>
-          <div>
+          <div class="group-invalid:cursor-not-allowed">
             <button
               type="submit"
-              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-inherit bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              register
+              class="text-white group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 group-invalid:pointer-events-none">
+              Register
             </button>
           </div>
         </form>
@@ -104,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-  import InputComponent from '@/components/InputComponent.vue';
+  import InputComponent from '@/components/FormInputComponent.vue';
   import LoginIcon from '@/components/LoginIcon.vue';
   import store from '@/store';
   import axios from 'axios';

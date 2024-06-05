@@ -20,7 +20,8 @@
         class="bg-zinc-50 dark:bg-black py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form
           @submit.prevent="login"
-          class="space-y-6"
+          class="space-y-6 group"
+          novalidate
           action="#"
           method="POST">
           <div>
@@ -30,7 +31,8 @@
               name="login-email"
               type="email"
               placeholder="Enter your email address"
-              @input="emitEmail" />
+              @input="emitEmail"
+              errorMessage="Please enter a valid email address" />
           </div>
 
           <div>
@@ -39,13 +41,14 @@
               id="login-password"
               name="login-password"
               type="password"
+              errorMessage="Please enter a valid password"
               placeholder="Enter your password"
               @input="emitPassword" />
           </div>
-          <div>
+          <div class="group-invalid:cursor-not-allowed">
             <button
               type="submit"
-              class="text-white group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              class="text-white group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 group-invalid:pointer-events-none">
               Sign in
             </button>
           </div>
@@ -97,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-  import InputComponent from '@/components/InputComponent.vue';
+  import InputComponent from '@/components/FormInputComponent.vue';
   import LoginIcon from '@/components/LoginIcon.vue';
   import store from '@/store';
   import axios from 'axios';
