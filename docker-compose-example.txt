@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    container_name: server_c
+    ports:
+      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+    volumes:
+      - ./server:/app
+      - ./app/node_modules
+  postgres:
+    image: postgres
+    container_name: postgres_c
+    environment:
+      POSTGRES_USER: YOUR_USERNAME
+      POSTGRES_PASSWORD: YOUR_PASSWORD
+      POSTGRES_DB: YOUR_DATABASE
+    ports:
+      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+  client:
+    build: ./client
+    container_name: client_c
+    ports:
+      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+    volumes:
+      - ./client:/app
+      - ./app/node_modules
+    stdin_open: true
+    tty: true
