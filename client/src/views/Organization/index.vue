@@ -249,7 +249,7 @@
           headers: { authorization: `Bearer ${jwtToken}` },
         }
       )
-      .then((response) => {
+      .then(() => {
         router.go(0);
       });
   };

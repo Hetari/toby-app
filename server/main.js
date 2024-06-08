@@ -1,5 +1,4 @@
 import 'express-async-errors';
-// import dotenv from 'dotenv';
 import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
@@ -46,11 +45,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-const corsConfig = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
-
 // create and defined the absolute path in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -82,7 +76,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// TODO: add rbac
 // using middlewares
 app.use(
   morgan('combined', {
@@ -92,7 +85,7 @@ app.use(
 app.set('trust proxy', 1);
 app.use(express.json());
 app.use(helmet());
-app.use(cors(corsConfig));
+app.use(cors());
 app.use(xss());
 app.use(
   session({
@@ -102,7 +95,7 @@ app.use(
     // cookie: { secure: true },
   })
 );
-// app.use(limiter);
+app.use(limiter);
 
 // initialize passport and session
 app.use(passport.initialize());
@@ -144,13 +137,13 @@ const serverStart = async () => {
       await sequelize.authenticate();
       await sequelize.sync({
         alter: true,
-        force: !true,
+        force: true,
         // logging: false,
       });
+      console.info('Database connected...');
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
-    console.info('Database connected...');
 
     const port = process.env.EXPRESS_PORT || 3000;
     const host = process.env.EXPRESS_HOST || 'localhost';

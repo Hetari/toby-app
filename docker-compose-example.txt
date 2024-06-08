@@ -1,29 +1,34 @@
 version: '3.8'
 services:
+
   server:
     build: ./server
     container_name: server_c
     ports:
-      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+      - PORT_ON_HOST_MACHINE:PORT_ON_CONTAINER
     volumes:
       - ./server:/app
       - ./app/node_modules
+    depends_on:
+      - postgres
+    environment:
+      - COPY_ALL_OF_.env_FILE_TO_HERE
   postgres:
     image: postgres
+    restart: always
     container_name: postgres_c
     environment:
-      POSTGRES_USER: YOUR_USERNAME
-      POSTGRES_PASSWORD: YOUR_PASSWORD
-      POSTGRES_DB: YOUR_DATABASE
+      - COPY_ONLY_DATABASE_ENV_VARIABLES_TO_HERE
     ports:
-      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+      - PORT_ON_HOST_MACHINE:PORT_ON_CONTAINER, in my fedora OS I use '5433:5433'
+
   client:
     build: ./client
     container_name: client_c
     ports:
-      - YOUR_LOCAL_PORT:YOUR_DOCKER_CONTAINER_PORT
+      - '5173:5173'
     volumes:
       - ./client:/app
-      - ./app/node_modules
+      # - ./app/node_modules
     stdin_open: true
     tty: true

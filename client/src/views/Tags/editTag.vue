@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
   import router from '@/router';
-  import { ref, Ref, onBeforeMount, reactive } from 'vue';
+  import { ref, onBeforeMount, reactive } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import EditInputComponent from '@/components/EditInputComponent.vue';

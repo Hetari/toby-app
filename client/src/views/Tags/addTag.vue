@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
   import router from '@/router';
-  import { ref, Ref, onBeforeMount, reactive } from 'vue';
+  import { reactive } from 'vue';
   import axios from 'axios';
   import store from '@/store';
   import InputComponent from '@/components/InputComponent.vue';
@@ -84,7 +84,7 @@
         }
       })
       .then(() => {
-        // router.go(0);
+        router.go(0);
       })
       .catch((error) => {
         useToast().error(error.message);

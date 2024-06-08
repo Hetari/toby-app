@@ -27,6 +27,11 @@ const register = async (req, res) => {
       profilePath,
       password: encryptedPassword,
     });
+    console.log();
+    console.log();
+    console.error('Inserting into db: ');
+    console.log();
+    console.log();
 
     token = generateToken(user.id, email);
   } catch (error) {
